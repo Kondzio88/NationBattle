@@ -1,0 +1,362 @@
+git<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/5e090bdfa3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon-32x32.png">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>National Battle</title>
+</head>
+
+<body>
+
+    <!-- Battle Container -->
+
+    <div class="battle-container">
+
+        <div class="player-side side">
+            
+            <div class="player-card-battle card-battle">
+                <div class="life">
+                    <div class="progress"></div>
+                    <span class="progress-text">100%</span>
+                </div>
+                <div class="power">
+                    <div class="progress"></div>
+                    <span class="progress-text">100%</span>
+                </div>
+                <h3>${name}</h3>
+                <img src='images/israel-merkava.png' alt="">
+                <p>umiejetnosc niszczenia + 20 att</p>
+                <div class="action">
+                    <button class="attack-btn">atakuj</button>
+                    <button class="ability-btn">umiejetnosc</button>
+                    <button class="defense-btn">bron sie</button>
+                </div>
+                <div class="info">
+                    <div class="att">
+                        <i class='bx bxs-chevrons-up'></i>
+                        <p>40</p>
+                    </div>
+                    <div class="def">
+                        <i class='bx bx-shield'></i>
+                        <p>70</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- central side  -->
+
+        <div class="center-side side">
+
+            <h1>afganistan</h1>
+            <img src="images/afganistan.jpg" alt="">
+            <button class="random-battle-btn">losuj pole bitwy</button>
+            <button class="action-battle-btn">akcja</button>
+
+        </div>
+
+        <!-- computer side -->
+
+        <div class="computer-side side">
+
+            <div class="computer-card-battle card-battle">
+                <div class="life">
+                    <div class="progress"></div>
+                    <span class="progress-text">100%</span>
+                </div>
+                <div class="power">
+                    <div class="progress"></div>
+                    <span class="progress-text">100%</span>
+                </div>
+                <h3>${name}</h3>
+                <img src='images/israel-infantry.png' alt="">
+                <p>umiejetnosc niszczenia + 20 att</p>
+                <div class="action">
+                    <button class="attack-btn">atakuj</button>
+                    <button class="ability-btn">uzyj umiejetnosci</button>
+                    <button class="defense-btn">bron sie</button>
+                </div>
+                <div class="info">
+                    <div class="att">
+                        <i class='bx bxs-chevrons-up'></i>
+                        <p>${att}</p>
+                    </div>
+                    <div class="def">
+                        <i class='bx bx-shield'></i>
+                        <p>${def}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Start Game Container -->
+
+    <div class="start-game-container">
+        <video autoplay loop muted src="images/video-1.mp4" class='video-bg'></video>
+        <div class="enter-the-game">
+            <h1>Nation Battle</h1>
+            <div class="countries">
+                <div class="circle">
+                    <img src="images/china-circle.png" alt="China">
+                </div>
+                <div class="circle">
+                    <img src="images/israel-circle.png" alt="Israel">
+                </div>
+                <div class="circle">
+                    <img src="images/russia-circle.png" alt="Russia">
+                </div>
+                <div class="circle">
+                    <img src="images/usa-circle.png" alt="Usa">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Container -->
+
+    <div class="container">
+
+        <div class="computer box">
+            <div class="nation computer-nation">
+                <img src="" alt="nation flag image" class="computer-logo logo">
+                <h1></h1>
+                <div class="life">
+                    <div class="progress"></div>
+                    <span class="progress-text">1000 hp</span>
+                </div>
+            </div>
+
+            <div class="cards computer-cards">
+
+                <!-- <div class="computer-card card">
+                    <div class="life">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <div class="power">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <h3>name</h3>
+                    <img src="images/russia-k52.png" alt="">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    <div class="info">
+                        <div class="att">
+                            <i class='bx bxs-chevrons-up'></i>
+                            <p>40</p>
+                        </div>
+                        <div class="def">
+                            <i class='bx bx-shield'></i>
+                            <p>70</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="computer-card card">
+                    <div class="life">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <div class="power">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <h3>name</h3>
+                    <img src="images/russia-specnaz.png" alt="">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    <div class="info">
+                        <div class="att">
+                            <i class='bx bxs-chevrons-up'></i>
+                            <p>40</p>
+                        </div>
+                        <div class="def">
+                            <i class='bx bx-shield'></i>
+                            <p>70</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="computer-card card">
+                    <div class="life">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <div class="power">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <h3>name</h3>
+                    <img src="images/russia-t90.png" alt="">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    <div class="info">
+                        <div class="att">
+                            <i class='bx bxs-chevrons-up'></i>
+                            <p>40</p>
+                        </div>
+                        <div class="def">
+                            <i class='bx bx-shield'></i>
+                            <p>70</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="computer-card card">
+                    <div class="life">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <div class="power">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <h3>name</h3>
+                    <img src="images/russia-corvetta.png" alt="">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    <div class="info">
+                        <div class="att">
+                            <i class='bx bxs-chevrons-up'></i>
+                            <p>40</p>
+                        </div>
+                        <div class="def">
+                            <i class='bx bx-shield'></i>
+                            <p>70</p>
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+
+
+
+        <div class="player box">
+            <div class="nation player-nation">
+                <img src="images/usa-logo.png" alt="" class="player-logo logo">
+                <h1></h1>
+                <div class="life">
+                    <div class="progress"></div>
+                    <span class="progress-text">1000 hp</span>
+                </div>
+            </div>
+
+            <div class="cards player-cards">
+
+                <!-- <div class="player-card card">
+                    <div class="life">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <div class="power">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <h3>name</h3>
+                    <img src="images/usa-abrams.png" alt="">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    <div class="info">
+                        <div class="att">
+                            <i class='bx bxs-chevrons-up'></i>
+                            <p>40</p>
+                        </div>
+                        <div class="def">
+                            <i class='bx bx-shield'></i>
+                            <p>70</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="player-card card">
+                    <div class="life">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <div class="power">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <h3>name</h3>
+                    <img src="images/usa-dreadnouth.png" alt="">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    <div class="info">
+                        <div class="att">
+                            <i class='bx bxs-chevrons-up'></i>
+                            <p>40</p>
+                        </div>
+                        <div class="def">
+                            <i class='bx bx-shield'></i>
+                            <p>70</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="player-card card">
+                    <div class="life">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <div class="power">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <h3>name</h3>
+                    <img src="images/usa-marines.png" alt="">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    <div class="info">
+                        <div class="att">
+                            <i class='bx bxs-chevrons-up'></i>
+                            <p>40</p>
+                        </div>
+                        <div class="def">
+                            <i class='bx bx-shield'></i>
+                            <p>70</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="player-card card">
+                    <div class="life">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <div class="power">
+                        <div class="progress"></div>
+                        <span class="progress-text">100%</span>
+                    </div>
+                    <h3>name</h3>
+                    <img src="images/usa-apache.png" alt="">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    <div class="info">
+                        <div class="att">
+                            <i class='bx bxs-chevrons-up'></i>
+                            <p>40</p>
+                        </div>
+                        <div class="def">
+                            <i class='bx bx-shield'></i>
+                            <p>70</p>
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="countries.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
