@@ -1,12 +1,12 @@
 class Units {
-	constructor(name, type, man, att, def, img, info, ability) {
+	constructor( name, type, man, att, def, img, info, ability) {
+		this.hp = 100
+		this.power = 100
 		this.name = name
 		this.type = type
 		this.manouver = man
-		this.hp = 100
 		this.att = att
 		this.def = def
-		this.power = 100
 		this.img = img
 		this.info = info
 		this.ability = ability
@@ -115,7 +115,7 @@ const specnaz = new Units(
 	}
 )
 
-const corvetta = new Units( 
+const corvetta = new Units(
 	'Moskwa',
 	'Infa',
 	'Ship',
@@ -177,7 +177,7 @@ const frigate = new Units(
 	}
 )
 
-israel.push(merkava, haaver,mosad, frigate)
+israel.push(merkava, haaver, mosad, frigate)
 
 // China Units Stack
 
@@ -238,4 +238,4 @@ const akula = new Units(
 	}
 )
 
-china.push(type99,mi24,zhonguo,akula)
+china.push(type99, mi24, zhonguo, akula)

@@ -49,8 +49,6 @@ const choseCountry = nation => {
 }
 
 const renderStartTable = (nationId, playerCardsArea) => {
-	
-
 	if (nationId === 'Usa') {
 		playerArray = usa
 		renderTable(usa, playerCardsArea)
@@ -72,7 +70,6 @@ const renderStartTable = (nationId, playerCardsArea) => {
 }
 
 // computer choice and render his table without nationId which chose player
-
 
 const computerRandomChoice = nationId => {
 	const computerCardsArea = document.querySelector('.computer-cards')
@@ -112,7 +109,7 @@ const computerRandomChoice = nationId => {
 const renderTable = (nationArr, renderArea) => {
 	renderArea.innerHTML = '' // Clear previous content
 
-	nationArr.forEach(({ name, type, man, att, def, info, ability, img }) => {
+	nationArr.forEach(({ hp, power, name, type, man, att, def, info, ability, img }) => {
 		const elHtml = document.createElement('div')
 		elHtml.classList.add('card')
 		elHtml.innerHTML = `
@@ -138,9 +135,11 @@ const renderTable = (nationArr, renderArea) => {
                 </div>
             </div>`
 
-		elHtml.dataset.unit = JSON.stringify({ name, type, man, att, def, info, ability, img })
+		elHtml.dataset.unit = JSON.stringify({ hp, power, name, type, man, att, def, info, ability, img })
 
 		renderArea.appendChild(elHtml)
+
+		// Click and selected Unit and add dataset
 
 		elHtml.addEventListener('click', () => {
 			choseUnit(elHtml.dataset.unit, computerArray)
@@ -167,14 +166,13 @@ const renderTable = (nationArr, renderArea) => {
 		return compUnit
 	}
 
-	// Start battle global function
+	// Start battle  ,render battle field function
 
 	const startBattle = (playerUnit, compUnit) => {
-		
 		const battleContainer = document.querySelector('.battle-container')
 		const battlePlayerCard = document.querySelector('.player-side .card-battle')
 		const battleComputerCard = document.querySelector('.computer-side .card-battle')
-		
+
 		battlePlayerCard.innerHTML = ''
 		battleComputerCard.innerHTML = ''
 
@@ -190,7 +188,7 @@ const renderTable = (nationArr, renderArea) => {
                 </div>
                 <h3>${playerUnit.name}</h3>
                 <img src=${playerUnit.img} alt="">
-                <p>umiejetnosc niszczenia + 20 att</p>
+                <p>${playerUnit.info}</p>
                 <div class="action">
                     <button class="attack-btn">atakuj</button>
                     <button class="ability-btn">umiejetnosc</button>
@@ -207,10 +205,9 @@ const renderTable = (nationArr, renderArea) => {
                     </div>
                 </div>`
 
-
-			const htmlCompUnit = document.createElement('div')
-			htmlCompUnit.classList.add('card-battle')
-			htmlCompUnit.innerHTML = `<div class="life">
+		const htmlCompUnit = document.createElement('div')
+		htmlCompUnit.classList.add('card-battle')
+		htmlCompUnit.innerHTML = `<div class="life">
 						<div class="progress"></div>
 						<span class="progress-text">100%</span>
 					</div>
@@ -220,7 +217,7 @@ const renderTable = (nationArr, renderArea) => {
 					</div>
 					<h3>${compUnit.name}</h3>
 					<img src=${compUnit.img} alt="">
-					<p>umiejetnosc niszczenia + 20 att</p>
+					<p>${compUnit.info}</p>
 					<div class="action">
 						<button class="attack-btn">atakuj</button>
 						<button class="ability-btn">umiejetnosc</button>
@@ -237,9 +234,26 @@ const renderTable = (nationArr, renderArea) => {
 						</div>
 					</div>`
 
-				battlePlayerCard.appendChild(htmlPlayerUnit)
-				battleComputerCard.appendChild(htmlCompUnit)
+		//  Current life nad power object render
 
-				battleContainer.style.display = 'flex'
+		htmlPlayerUnit.querySelector('.life .progress').style.width = playerUnit.hp + '%'
+		htmlCompUnit.querySelector('.life .progress').style.width = compUnit.hp + '%'
+
+		console.log(compUnit);
+		htmlPlayerUnit.querySelector('.power .progress').style.width = playerUnit.power + '%'
+		htmlCompUnit.querySelector('.power .progress').style.width = compUnit.power + '%'
+
+		battlePlayerCard.appendChild(htmlPlayerUnit)
+		battleComputerCard.appendChild(htmlCompUnit)
+
+		battleContainer.style.display = 'flex'
+
+		battle(playerUnit, compUnit)
 	}
+}
+
+//  Battle bettwen Units function
+
+const battle = (playerUnit, compUnit) => {
+	
 }
