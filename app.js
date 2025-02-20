@@ -38,6 +38,11 @@ let playerArray = ''
 let computerArray = ''
 let computerChoice = ''
 
+// Global Varriables for battlefield
+
+let currentPlayerUnit = null
+let currentCompUnit = null
+
 // Chose country by player and rander start Table
 
 const choseCountry = nation => {
@@ -135,23 +140,27 @@ const renderTable = (nationArr, renderArea) => {
                 </div>
             </div>`
 
-		elHtml.dataset.unit = JSON.stringify({ hp, power, name, type, man, att, def, info, ability, img })
+		elHtml.querySelector('.life .progress').style.width = hp + '%'
+		elHtml.querySelector('.power .progress').style.width = power + '%'
+
+		elHtml.unitData = { hp, power, name, type, man, att, def, info, ability, img };
+
 
 		renderArea.appendChild(elHtml)
 
 		// Click and selected Unit and add dataset
 
 		elHtml.addEventListener('click', () => {
-			choseUnit(elHtml.dataset.unit, computerArray)
+			choseUnit(elHtml.unitData, computerArray)
 
 			startBattle(selectedPlayerUnit, selectedCompUnit)
 		})
 	})
-
+}
 	// Konwert JSON data to unit JS
 
 	const choseUnit = function (data, computerArray) {
-		selectedPlayerUnit = JSON.parse(data)
+		selectedPlayerUnit = data
 
 		selectedCompUnit = getRandomCompUnit(computerArray)
 	}
@@ -169,9 +178,13 @@ const renderTable = (nationArr, renderArea) => {
 	// Start battle  ,render battle field function
 
 	const startBattle = (playerUnit, compUnit) => {
+
+		currentPlayerUnit = playerUnit
+		currentCompUnit = compUnit
+
 		const battleContainer = document.querySelector('.battle-container')
-		const battlePlayerCard = document.querySelector('.player-side .card-battle')
-		const battleComputerCard = document.querySelector('.computer-side .card-battle')
+		const battlePlayerCard = document.querySelector('.player-side')
+		const battleComputerCard = document.querySelector('.computer-side')
 
 		battlePlayerCard.innerHTML = ''
 		battleComputerCard.innerHTML = ''
@@ -205,6 +218,23 @@ const renderTable = (nationArr, renderArea) => {
                     </div>
                 </div>`
 
+		//  Current life nad power object render and text span
+
+		htmlPlayerUnit.querySelector('.card-battle .life .progress').style.width = playerUnit.hp + '%'
+		htmlPlayerUnit.querySelector('.power .progress').style.width = playerUnit.power + '%'
+
+		htmlPlayerUnit.querySelector('.card-battle .life .progress-text').innerHTML = playerUnit.hp + '%'
+		htmlPlayerUnit.querySelector('.power .progress-text').innerHTML = playerUnit.power + '%'
+
+		// listener for attack, defense and abillity
+
+		const attackBtn = htmlPlayerUnit.querySelector('.attack-btn')
+		attackBtn.addEventListener('click',() => attackPlayer(playerUnit))
+		htmlPlayerUnit.querySelector('.ability-btn').addEventListener('click',() => abbilitesPlayer(playerUnit))
+		htmlPlayerUnit.querySelector('.defense-btn')
+
+		// Comp render card at battlefield
+
 		const htmlCompUnit = document.createElement('div')
 		htmlCompUnit.classList.add('card-battle')
 		htmlCompUnit.innerHTML = `<div class="life">
@@ -234,14 +264,13 @@ const renderTable = (nationArr, renderArea) => {
 						</div>
 					</div>`
 
-		//  Current life nad power object render
+		//  Current life nad power object render and text span
 
-		htmlPlayerUnit.querySelector('.life .progress').style.width = playerUnit.hp + '%'
-		htmlCompUnit.querySelector('.life .progress').style.width = compUnit.hp + '%'
-
-		console.log(compUnit);
-		htmlPlayerUnit.querySelector('.power .progress').style.width = playerUnit.power + '%'
+		htmlCompUnit.querySelector('.card-battle .life .progress').style.width = compUnit.hp + '%'
 		htmlCompUnit.querySelector('.power .progress').style.width = compUnit.power + '%'
+		
+		htmlCompUnit.querySelector('.card-battle .life .progress-text').innerHTML = compUnit.hp + '%'
+		htmlCompUnit.querySelector('.power .progress-text').innerHTML = compUnit.power + '%'
 
 		battlePlayerCard.appendChild(htmlPlayerUnit)
 		battleComputerCard.appendChild(htmlCompUnit)
@@ -250,10 +279,32 @@ const renderTable = (nationArr, renderArea) => {
 
 		battle(playerUnit, compUnit)
 	}
-}
+
 
 //  Battle bettwen Units function
 
-const battle = (playerUnit, compUnit) => {
-	
+const battle = (playerUnit, compUnit) => {}
+
+// Units player abbilites functions
+
+const attackPlayer = () => {
+	if(currentCompUnit.hp >= 0){
+		if(currentCompUnit.def < currentPlayerUnit.att)
+		currentCompUnit.hp -= (currentPlayerUnit.att - currentCompUnit.def)
+	}
+	else{
+
+	}
+	startBattle(currentPlayerUnit ,currentCompUnit)
+}
+
+const abbilitesPlayer = unit => {
+	if(unit.power >= 100){
+		unit.ability()
+		unit.power -= 100
+	}
+	else{
+		return
+	}
+	startBattle(currentPlayerUnit ,currentCompUnit)
 }
