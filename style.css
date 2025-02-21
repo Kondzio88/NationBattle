@@ -9,14 +9,18 @@
 	outline: none;
 	border: none;
 	text-decoration: none;
-	transition: 0.3s linear;
 	font-size: 62.5%;
+}
+
+@font-face {
+	font-family: font-main-game;
+	src: url(images/batmfa__.ttf);
 }
 
 :root {
 	--black-color: rgb(0, 0, 0, 1);
 	--white-color: rgb(255, 255, 255, 1);
-} 
+}
 
 html {
 	scroll-behavior: smooth;
@@ -69,9 +73,10 @@ body {
 }
 
 .start-game-container .enter-the-game h1 {
+	font-family: font-main-game;
 	font-size: 6rem;
 	padding-bottom: 3rem;
-	background: url(images/moro.jpg);
+	background: url(images/steelImg.png);
 	background-clip: contain;
 	background-repeat: no-repeat;
 	-webkit-background-clip: text; /* Wsparcie dla starszych wersji Webkit (np. Safari) */
@@ -198,10 +203,9 @@ body {
 	text-shadow: 1px 1px var(--black-color);
 }
 
-.box .nation .life
- {
+.box .nation .life {
 	position: relative;
-	width:100%;
+	width: 100%;
 	height: 3rem;
 	border-radius: 1rem;
 	background-color: #b8b5b5;
@@ -274,6 +278,7 @@ body {
 	width: 70%;
 	height: 100%;
 	background-color: green;
+	transition: width 0.5s ease-in-out;
 }
 
 .box .cards .card .life .progress-text,
@@ -378,8 +383,8 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	gap:1rem;
-	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.3);
+	gap: 1rem;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
 	border-radius: 1rem;
 	padding: 1rem;
 }
@@ -395,7 +400,7 @@ body {
 	align-items: center;
 	background-color: #eee;
 	border-radius: 1rem;
-	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
 }
 
 .battle-container .card-battle .life .progress {
@@ -405,6 +410,7 @@ body {
 	height: 100%;
 	border-radius: 1rem;
 	background-color: green;
+	transition: width 1s ease-in-out;
 }
 
 .battle-container .card-battle .power .progress {
@@ -415,16 +421,17 @@ body {
 	height: 100%;
 	border-radius: 1rem;
 	background-color: blue;
+	transition: width 1s ease-in-out;
 }
 
 .battle-container .card-battle .life .progress-text,
-.battle-container .card-battle .power .progress-text{
+.battle-container .card-battle .power .progress-text {
 	font-size: 2rem;
 	font-weight: bold;
 	z-index: 2;
 }
 
-.battle-container .card-battle h3{
+.battle-container .card-battle h3 {
 	font-size: 2.5rem;
 	font-weight: bold;
 }
@@ -434,162 +441,162 @@ body {
 	height: 30%;
 	object-fit: contain;
 }
-.battle-container .card-battle p{
+.battle-container .card-battle p {
 	font-size: 1.5rem;
 	font-style: italic;
 	font-weight: bold;
 }
 
-.battle-container .card-battle .action{
+.battle-container .card-battle .action {
 	width: 80%;
 	display: flex;
 	justify-content: space-around;
 }
 
-.battle-container .card-battle .action button{
-	width:17rem;
+.battle-container .card-battle .action button {
+	width: 17rem;
 	height: 5rem;
-	margin:0 .5rem;
+	margin: 0 0.5rem;
 	border-radius: 2rem;
 	font-size: 1.4rem;
 	font-weight: bold;
 	text-transform: capitalize;
-	cursor:pointer;
-	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
 	background-position: left;
 	background-size: 150%;
-	transition: .5s linear;
+	transition: 0.5s linear;
 	font-family: 'Montserrat', sans-serif;
 }
 
-.battle-container .card-battle .action .attack-btn{
-	background-image: linear-gradient(45deg,red,black);
+.battle-container .card-battle .action .attack-btn {
+	background-image: linear-gradient(45deg, red, black);
 	color: var(--white-color);
 }
 
-.battle-container .card-battle .action .attack-btn:hover{
-	background-image: linear-gradient(45deg,black,red,black);
+.battle-container .card-battle .action .attack-btn:hover {
+	background-image: linear-gradient(45deg, black, red, black);
 	background-position: right;
-	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.5);
-	color:gold;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+	color: gold;
 	transform: translateY(-3px);
 }
 
-.battle-container .card-battle .action .ability-btn{
-	background-image: linear-gradient(45deg,blue,white);
+.battle-container .card-battle .action .ability-btn {
+	background-image: linear-gradient(45deg, blue, white);
 	color: var(--black-color);
 }
 
-.battle-container .card-battle .action .ability-btn:hover{
-	background-image: linear-gradient(45deg,white,blue,white);
+.battle-container .card-battle .action .ability-btn:hover {
+	background-image: linear-gradient(45deg, white, blue, white);
 	background-position: right;
-	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.5);
-	color:rgb(255, 255, 255);
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+	color: rgb(255, 255, 255);
 	transform: translateY(-3px);
 }
 
-.battle-container .card-battle .action .defense-btn{
-	background-image: linear-gradient(45deg,green,white);
+.battle-container .card-battle .action .defense-btn {
+	background-image: linear-gradient(45deg, green, white);
 	color: #eee;
 }
 
-.battle-container .card-battle .action .defense-btn:hover{
-	background-image: linear-gradient(45deg,white,green,white);
+.battle-container .card-battle .action .defense-btn:hover {
+	background-image: linear-gradient(45deg, white, green, white);
 	background-position: right;
-	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.5);
-	color:black;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+	color: black;
 	transform: translateY(-3px);
 }
 
-.battle-container .card-battle .info{
-	width:100%;
+.battle-container .card-battle .info {
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.battle-container .card-battle .info .att,.battle-container .card-battle .info .def{
+.battle-container .card-battle .info .att,
+.battle-container .card-battle .info .def {
 	display: flex;
-	gap:1rem;
+	gap: 1rem;
 	font-size: 2rem;
 	align-items: center;
 }
 
-.battle-container .card-battle .info .att i{
+.battle-container .card-battle .info .att i {
 	font-size: 4rem;
 	color: red;
 }
 
-.battle-container .card-battle .info .att p{
+.battle-container .card-battle .info .att p {
 	font-size: 3rem;
 }
 
-.battle-container .card-battle .info .def i{
+.battle-container .card-battle .info .def i {
 	font-size: 4rem;
 	color: blue;
 }
 
-.battle-container .card-battle .info .def p{
+.battle-container .card-battle .info .def p {
 	font-size: 3rem;
 }
 
 /*   Central side styles     */
 
-.battle-container .center-side{
+.battle-container .center-side {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-direction: column;
-	padding:2rem;
+	padding: 2rem;
 }
 
-.battle-container .center-side h1{
+.battle-container .center-side h1 {
 	font-size: 4rem;
 }
 
-.battle-container .center-side img{
-	width:70%;
+.battle-container .center-side img {
+	width: 70%;
 	height: 40%;
 	object-fit: cover;
 	border: 1px solid black;
 }
 
-.battle-container .center-side button{
-	width:60%;
+.battle-container .center-side button {
+	width: 60%;
 	height: 5rem;
 	border-radius: 1rem;
 	font-size: 2rem;
 	font-weight: bold;
 	padding: 1rem 0;
 	text-transform: capitalize;
-	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.3);
-	cursor:pointer;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+	cursor: pointer;
 	font-family: 'Montserrat', sans-serif;
 	background-size: 200%;
 }
 
-.battle-container .center-side .random-battle-btn{
-	background-image: linear-gradient(45deg,white,black);
+.battle-container .center-side .random-battle-btn {
+	background-image: linear-gradient(45deg, white, black);
 	background-position: left;
 }
 
-.battle-container .center-side .random-battle-btn:hover{
-	background-image: linear-gradient(45deg,black,white,black);
+.battle-container .center-side .random-battle-btn:hover {
+	background-image: linear-gradient(45deg, black, white, black);
 	background-position: right;
 	transform: translateY(-3px);
 }
 
-.battle-container .center-side .action-battle-btn{
-	background-image: linear-gradient(45deg,red,black);
+.battle-container .center-side .action-battle-btn {
+	background-image: linear-gradient(45deg, red, black);
 	background-position: left;
 }
 
-.battle-container .center-side .action-battle-btn:hover{
-	background-image: linear-gradient(45deg,black,red,black);
+.battle-container .center-side .action-battle-btn:hover {
+	background-image: linear-gradient(45deg, black, red, black);
 	background-position: right;
 	transform: translateY(-3px);
 }
-
 
 /*    Media Querries    */
 
@@ -623,6 +630,17 @@ body {
 @media (max-width: 660px) {
 	* {
 		font-size: 45%;
+	}
+	.start-game-container .enter-the-game {
+		position: absolute;
+		top: 37%;
+		left: 50%;
+		width: 100%;
+		height: 100vh;
+		transform: translate(-50%, -50%);
+	}
+	.start-game-container .enter-the-game h1{
+		font-size: 5.5rem;
 	}
 	.box .cards {
 		gap: 0.5rem;
@@ -660,5 +678,11 @@ body {
 	}
 	.box .nation .life .progress-text {
 		font-size: 1.5rem;
+	}
+}
+
+@media  screen and (max-width:400px) {
+	.start-game-container .enter-the-game h1{
+		font-size: 5rem;
 	}
 }

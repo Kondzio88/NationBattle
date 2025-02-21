@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				tooltip.remove()
 			})
 		})
+
 		nation.addEventListener('click', () => {
 			choseCountry(nation)
 		})
@@ -102,7 +103,7 @@ const computerRandomChoice = nationId => {
 	}
 
 	if (computerChoice === nationId) {
-		computerRandomChoice(nationId)
+		return computerRandomChoice(nationId)
 	} else {
 		computerNationName.innerHTML = computerChoice
 		renderTable(computerArray, computerCardsArea)
@@ -218,18 +219,14 @@ const startBattle = (playerUnit, compUnit) => {
 
 	//  Current life nad power object render and text span
 
-	htmlPlayerUnit.querySelector('.card-battle .life .progress').style.width = playerUnit.hp + '%'
-	htmlPlayerUnit.querySelector('.power .progress').style.width = playerUnit.power + '%'
+	let playerUnitLifeDiv = htmlPlayerUnit.querySelector('.life .progress')
+	let playerUnitPowerDiv = htmlPlayerUnit.querySelector('.power .progress')
 
-	htmlPlayerUnit.querySelector('.card-battle .life .progress-text').innerHTML = playerUnit.hp + '%'
+	playerUnitLifeDiv.style.width = playerUnit.hp + '%'
+	playerUnitPowerDiv.style.width = playerUnit.power + '%'
+
+	htmlPlayerUnit.querySelector('.life .progress-text').innerHTML = playerUnit.hp + '%'
 	htmlPlayerUnit.querySelector('.power .progress-text').innerHTML = playerUnit.power + '%'
-
-	// listener for attack, defense and abillity
-
-	const attackBtn = htmlPlayerUnit.querySelector('.attack-btn')
-	attackBtn.addEventListener('click', () => attackPlayer(playerUnit))
-	htmlPlayerUnit.querySelector('.ability-btn').addEventListener('click', () => abbilitesPlayer(playerUnit))
-	htmlPlayerUnit.querySelector('.defense-btn')
 
 	// Comp render card at battlefield
 
@@ -264,30 +261,36 @@ const startBattle = (playerUnit, compUnit) => {
 
 	//  Current life nad power object render and text span
 
-	htmlCompUnit.querySelector('.card-battle .life .progress').style.width = compUnit.hp + '%'
-	htmlCompUnit.querySelector('.power .progress').style.width = compUnit.power + '%'
+	let compUnitLifeDiv = htmlCompUnit.querySelector('.life .progress')
+	let compUnitPowerDiv = htmlCompUnit.querySelector('.power .progress')
 
-	htmlCompUnit.querySelector('.card-battle .life .progress-text').innerHTML = compUnit.hp + '%'
+	compUnitLifeDiv.style.width = compUnit.hp + '%'
+	compUnitPowerDiv.style.width = compUnit.power + '%'
+
+	htmlCompUnit.querySelector('.life .progress-text').innerHTML = compUnit.hp + '%'
 	htmlCompUnit.querySelector('.power .progress-text').innerHTML = compUnit.power + '%'
 
 	battlePlayerCard.appendChild(htmlPlayerUnit)
 	battleComputerCard.appendChild(htmlCompUnit)
 
-	battleContainer.style.display = 'flex'
+	// Listener for attack, defense and abillity
 
-	battle(playerUnit, compUnit)
+	const attackBtn = htmlPlayerUnit.querySelector('.attack-btn')
+	attackBtn.addEventListener('click', () => attackPlayer(compUnitLifeDiv))
+	htmlPlayerUnit.querySelector('.ability-btn').addEventListener('click', () => abbilitesPlayer(playerUnit))
+	htmlPlayerUnit.querySelector('.defense-btn')
+
+	battleContainer.style.display = 'flex'
 }
 
-//  Battle bettwen Units function
+// Units player abbilites functions , and setInterval animation
 
-const battle = (playerUnit, compUnit) => {}
-
-// Units player abbilites functions
-
-const attackPlayer = () => {
+const attackPlayer = compUnitLifeDiv => {
 	let restAtt = 0
+
 	if (currentCompUnit.hp >= 0) {
-		if (currentCompUnit.def <= 0){
+		if (currentCompUnit.def <= 0) {
+			let prevHp = currentCompUnit.hp
 			currentCompUnit.hp -= currentPlayerUnit.att
 			restAtt = 0
 		}
@@ -295,11 +298,17 @@ const attackPlayer = () => {
 			restAtt = currentPlayerUnit.att - currentCompUnit.def
 			currentCompUnit.hp -= restAtt
 			currentCompUnit.def -= currentPlayerUnit.att
-			console.log(restAtt);
 		}
-		if(currentCompUnit.def > currentPlayerUnit.att) {
+		if (currentCompUnit.def > currentPlayerUnit.att) {
 			currentCompUnit.def -= currentPlayerUnit.att
 		}
+		if (currentCompUnit.def == currentPlayerUnit.att) {
+			currentCompUnit.def = 0
+		}
+
+		compUnitLifeDiv.style.width = currentCompUnit.hp + '%'
+		compUnitLifeDiv.nextElementSibling.innerHTML = currentCompUnit.hp + '%'
+
 		startBattle(currentPlayerUnit, currentCompUnit)
 	}
 }
