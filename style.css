@@ -31,6 +31,7 @@ html {
 body {
 	width: 100%;
 	height: 100vh;
+	overflow: hidden;
 }
 
 /* Start Game Container */
@@ -170,6 +171,7 @@ body {
 	border-radius: 2rem;
 	padding: 1rem;
 	background: url(images/moro.jpg);
+	overflow: hidden;
 }
 
 .title{
@@ -182,7 +184,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	font-family: font-main-game;
-	font-size: 6rem;
+	font-size: 8rem;
 	padding-bottom: 3rem;
 	background: url(images/steelImg.png);
 	background-clip: contain;
@@ -679,9 +681,12 @@ body {
 		width: 10rem;
 		height: 22rem;
 	}
+	.box .nation{
+		min-width:200px;
+	}
 	.box .nation img {
-		width: 8rem;
-		height: 6rem;
+		width: 13rem;
+		height: 7rem;
 	}
 	.box .cards .card img {
 		width: 7rem;
@@ -707,6 +712,40 @@ body {
 	}
 	.box .nation .life .progress-text {
 		font-size: 1.5rem;
+	}
+
+	/* Battle - Container  */
+
+	.battle-container{
+		flex-direction: column;
+		justify-content: space-between;
+		padding:0;
+		align-items: center;
+		height: 100%;
+		gap:0;
+	}
+	.battle-container .side{
+		width:100%;
+		height: 33%;
+	}
+	.battle-container .computer-side{
+		order:1;
+	}
+	.battle-container .center-side{
+		order:2;
+	}
+	.battle-container .player-side{
+		order:3;
+	}
+	.card-battle  {
+		position: relative;
+		max-height: 200px;
+		gap:0.5rem;
+	}
+	.card-battle .info{
+		position: absolute;
+		top:50%;
+		padding:0 1rem;
 	}
 }
 
