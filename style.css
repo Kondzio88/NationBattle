@@ -59,7 +59,7 @@ body {
 
 .start-game-container .enter-the-game {
 	position: absolute;
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	width: 100%;
 	height: 100vh;
@@ -72,7 +72,11 @@ body {
 	overflow: hidden;
 }
 
-.start-game-container .enter-the-game h1 {
+.start-game-container .enter-the-game h1{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	font-family: font-main-game;
 	font-size: 6rem;
 	padding-bottom: 3rem;
@@ -168,6 +172,26 @@ body {
 	background: url(images/moro.jpg);
 }
 
+.title{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: font-main-game;
+	font-size: 6rem;
+	padding-bottom: 3rem;
+	background: url(images/steelImg.png);
+	background-clip: contain;
+	background-repeat: no-repeat;
+	-webkit-background-clip: text; /* Wsparcie dla starszych wersji Webkit (np. Safari) */
+	background-clip: text;
+	-webkit-text-fill-color: transparent; /* Ukrycie koloru tekstu dla starszych wersji Webkit */
+	text-fill-color: transparent;
+}
 /*  Player and Computer boxes */
 
 .box {
@@ -627,20 +651,25 @@ body {
 	}
 }
 
+/* MEDIA MEDIUM DEVICES */
+
 @media (max-width: 660px) {
 	* {
 		font-size: 45%;
 	}
 	.start-game-container .enter-the-game {
 		position: absolute;
-		top: 37%;
+		top: 35%;
 		left: 50%;
 		width: 100%;
 		height: 100vh;
 		transform: translate(-50%, -50%);
 	}
-	.start-game-container .enter-the-game h1{
-		font-size: 5.5rem;
+	.container .box{
+		flex-direction: column;
+	}
+	.container .computer .computer-nation{
+		order: 2;
 	}
 	.box .cards {
 		gap: 0.5rem;
@@ -681,8 +710,8 @@ body {
 	}
 }
 
+/* MEDIA SMALL DEVICES */
+
 @media  screen and (max-width:400px) {
-	.start-game-container .enter-the-game h1{
-		font-size: 5rem;
-	}
+	
 }
