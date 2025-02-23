@@ -73,6 +73,9 @@ const renderStartTable = (nationId, playerCardsArea) => {
 		playerFlagLogo.src = 'images/russia-logo.png'
 	}
 	playerCountryName.innerHTML = nationId
+
+	playerSideHtml = document.querySelector('.player-side')
+	playerSideHtml.style.backgroundImage = `url(${playerFlagLogo.src})`
 }
 
 // computer choice and render his table without nationId which chose player
@@ -108,6 +111,9 @@ const computerRandomChoice = nationId => {
 		computerNationName.innerHTML = computerChoice
 		renderTable(computerArray, computerCardsArea)
 	}
+
+	compSideHtml = document.querySelector('.computer-side')
+	compSideHtml.style.backgroundImage = `url(${computerFlagLogo.src})`
 }
 
 // Render table after choice country by player

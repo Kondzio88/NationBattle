@@ -73,8 +73,8 @@ body {
 	overflow: hidden;
 }
 
-.start-game-container .enter-the-game h1{
-	display:flex;
+.start-game-container .enter-the-game h1 {
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -174,12 +174,12 @@ body {
 	overflow: hidden;
 }
 
-.title{
-	position:absolute;
-	top:50%;
-	left:50%;
+.title {
+	position: absolute;
+	top: 50%;
+	left: 50%;
 	transform: translate(-50%, -50%);
-	display:flex;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -400,6 +400,8 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .battle-container .card-battle {
@@ -410,7 +412,6 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	gap: 1rem;
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
 	border-radius: 1rem;
 	padding: 1rem;
 }
@@ -460,6 +461,7 @@ body {
 .battle-container .card-battle h3 {
 	font-size: 2.5rem;
 	font-weight: bold;
+	text-shadow: 1px 1px 1px white;
 }
 
 .battle-container .card-battle img {
@@ -471,6 +473,7 @@ body {
 	font-size: 1.5rem;
 	font-style: italic;
 	font-weight: bold;
+	text-shadow: 1px 1px 1px white;
 }
 
 .battle-container .card-battle .action {
@@ -667,10 +670,10 @@ body {
 		height: 100vh;
 		transform: translate(-50%, -50%);
 	}
-	.container .box{
+	.container .box {
 		flex-direction: column;
 	}
-	.container .computer .computer-nation{
+	.container .computer .computer-nation {
 		order: 2;
 	}
 	.box .cards {
@@ -678,11 +681,11 @@ body {
 		padding: 1rem 0;
 	}
 	.box .cards .card {
-		width: 10rem;
+		width: 12rem;
 		height: 22rem;
 	}
-	.box .nation{
-		min-width:200px;
+	.box .nation {
+		min-width: 200px;
 	}
 	.box .nation img {
 		width: 13rem;
@@ -716,41 +719,40 @@ body {
 
 	/* Battle - Container  */
 
-	.battle-container{
+	.battle-container {
 		flex-direction: column;
 		justify-content: space-between;
-		padding:0;
+		padding: 0;
 		align-items: center;
 		height: 100%;
-		gap:0;
+		gap: 0;
 	}
-	.battle-container .side{
-		width:100%;
+	.battle-container .side {
+		width: 100%;
 		height: 33%;
 	}
-	.battle-container .computer-side{
-		order:1;
+	.battle-container .computer-side {
+		order: 1;
 	}
-	.battle-container .center-side{
-		order:2;
+	.battle-container .center-side {
+		order: 2;
 	}
-	.battle-container .player-side{
-		order:3;
+	.battle-container .player-side {
+		order: 3;
 	}
-	.card-battle  {
+	.card-battle {
 		position: relative;
 		max-height: 200px;
-		gap:0.5rem;
+		gap: 0.5rem;
 	}
-	.card-battle .info{
+	.card-battle .info {
 		position: absolute;
-		top:50%;
-		padding:0 1rem;
+		top: 50%;
+		padding: 0 1rem;
 	}
 }
 
 /* MEDIA SMALL DEVICES */
 
-@media  screen and (max-width:400px) {
-	
+@media screen and (max-width: 400px) {
 }
