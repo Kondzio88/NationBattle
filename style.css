@@ -379,20 +379,19 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 90%;
-	height: 90%;
+	width: 100%;
+	height: 100%;
 	display: none;
 	justify-content: center;
 	background-color: var(--white-color);
 	border-radius: 2rem;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
 	z-index: 1000;
+	background-image: url(images/steelImg.png);
 }
 
 .battle-container .side {
 	width: 33%;
-
-	border: 1px solid black;
 }
 
 .battle-container .player-side,
@@ -414,6 +413,7 @@ body {
 	gap: 1rem;
 	border-radius: 1rem;
 	padding: 1rem;
+	color: black;
 }
 
 .battle-container .card-battle .life,
@@ -462,6 +462,9 @@ body {
 	font-size: 2.5rem;
 	font-weight: bold;
 	text-shadow: 1px 1px 1px white;
+	padding:0.5rem;
+	border-radius: 5px; 
+	backdrop-filter: blur(5px);
 }
 
 .battle-container .card-battle img {
@@ -470,10 +473,13 @@ body {
 	object-fit: contain;
 }
 .battle-container .card-battle p {
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-style: italic;
 	font-weight: bold;
 	text-shadow: 1px 1px 1px white;
+	padding:0.5rem;
+	border-radius: 5px; 
+	backdrop-filter: blur(5px);
 }
 
 .battle-container .card-battle .action {
@@ -486,7 +492,6 @@ body {
 	width: 17rem;
 	height: 5rem;
 	margin: 0 0.5rem;
-	border-radius: 2rem;
 	font-size: 1.4rem;
 	font-weight: bold;
 	text-transform: capitalize;
@@ -496,44 +501,19 @@ body {
 	background-size: 150%;
 	transition: 0.5s linear;
 	font-family: 'Montserrat', sans-serif;
+	transform: skewX(-15deg);
 }
 
-.battle-container .card-battle .action .attack-btn {
-	background-image: linear-gradient(45deg, red, black);
+.battle-container .card-battle .action button {
+	background-image: linear-gradient(45deg, black, gray, black);
 	color: var(--white-color);
 }
 
-.battle-container .card-battle .action .attack-btn:hover {
-	background-image: linear-gradient(45deg, black, red, black);
+.battle-container .card-battle .action button:hover {
+	background-image: linear-gradient(45deg, gray, black, gray);
 	background-position: right;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
-	color: gold;
-	transform: translateY(-3px);
-}
-
-.battle-container .card-battle .action .ability-btn {
-	background-image: linear-gradient(45deg, blue, white);
-	color: var(--black-color);
-}
-
-.battle-container .card-battle .action .ability-btn:hover {
-	background-image: linear-gradient(45deg, white, blue, white);
-	background-position: right;
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
-	color: rgb(255, 255, 255);
-	transform: translateY(-3px);
-}
-
-.battle-container .card-battle .action .defense-btn {
-	background-image: linear-gradient(45deg, green, white);
-	color: #eee;
-}
-
-.battle-container .card-battle .action .defense-btn:hover {
-	background-image: linear-gradient(45deg, white, green, white);
-	background-position: right;
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
-	color: black;
+	color: red;
 	transform: translateY(-3px);
 }
 
@@ -550,6 +530,9 @@ body {
 	gap: 1rem;
 	font-size: 2rem;
 	align-items: center;
+	padding:0.5rem;
+	border-radius: 10px; 
+	backdrop-filter: blur(5px);
 }
 
 .battle-container .card-battle .info .att i {

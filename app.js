@@ -296,14 +296,17 @@ const attackPlayer = compUnitLifeDiv => {
 
 	if (currentCompUnit.hp >= 0) {
 		if (currentCompUnit.def <= 0) {
-			let prevHp = currentCompUnit.hp
 			currentCompUnit.hp -= currentPlayerUnit.att
 			restAtt = 0
+			currentCompUnit.def = 0
 		}
 		if (currentCompUnit.def < currentPlayerUnit.att && currentCompUnit.def > 0) {
 			restAtt = currentPlayerUnit.att - currentCompUnit.def
 			currentCompUnit.hp -= restAtt
 			currentCompUnit.def -= currentPlayerUnit.att
+			if (currentCompUnit.def <= 0) {
+				currentCompUnit.def = 0
+			}
 		}
 		if (currentCompUnit.def > currentPlayerUnit.att) {
 			currentCompUnit.def -= currentPlayerUnit.att
@@ -328,3 +331,5 @@ const abbilitesPlayer = unit => {
 	}
 	startBattle(currentPlayerUnit, currentCompUnit)
 }
+
+
