@@ -416,6 +416,20 @@ body {
 	color: black;
 }
 
+/* add card-battle extra class for damage, power, defend and dead*/
+
+.battle-container .card-battle.damage {
+	background-image: url(images/bulletHoles.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: clip;
+	z-index: 2;
+}
+
+.battle-container .card-battle.power {
+	background-color: blue;
+}
+
 .battle-container .card-battle .life,
 .battle-container .card-battle .power {
 	position: relative;
@@ -428,6 +442,7 @@ body {
 	background-color: #eee;
 	border-radius: 1rem;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+	transition: width 1s ease-in-out;
 }
 
 .battle-container .card-battle .life .progress {
@@ -444,7 +459,7 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 50%;
+	width: 0%;
 	height: 100%;
 	border-radius: 1rem;
 	background-color: blue;
@@ -462,8 +477,8 @@ body {
 	font-size: 2.5rem;
 	font-weight: bold;
 	text-shadow: 1px 1px 1px white;
-	padding:0.5rem;
-	border-radius: 5px; 
+	padding: 0.5rem;
+	border-radius: 5px;
 	backdrop-filter: blur(5px);
 }
 
@@ -477,8 +492,8 @@ body {
 	font-style: italic;
 	font-weight: bold;
 	text-shadow: 1px 1px 1px white;
-	padding:0.5rem;
-	border-radius: 5px; 
+	padding: 0.5rem;
+	border-radius: 5px;
 	backdrop-filter: blur(5px);
 }
 
@@ -530,8 +545,8 @@ body {
 	gap: 1rem;
 	font-size: 2rem;
 	align-items: center;
-	padding:0.5rem;
-	border-radius: 10px; 
+	padding: 0.5rem;
+	border-radius: 10px;
 	backdrop-filter: blur(5px);
 }
 

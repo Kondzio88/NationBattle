@@ -283,7 +283,8 @@ const startBattle = (playerUnit, compUnit) => {
 
 	const attackBtn = htmlPlayerUnit.querySelector('.attack-btn')
 	attackBtn.addEventListener('click', () => attackPlayer(compUnitLifeDiv))
-	htmlPlayerUnit.querySelector('.ability-btn').addEventListener('click', () => abbilitesPlayer(playerUnit))
+	const abilityBtn = htmlPlayerUnit.querySelector('.ability-btn')
+	abilityBtn.addEventListener('click', () => abbilitesPlayer(playerUnitPowerDiv))
 	htmlPlayerUnit.querySelector('.defense-btn')
 
 	battleContainer.style.display = 'flex'
@@ -294,18 +295,30 @@ const startBattle = (playerUnit, compUnit) => {
 const attackPlayer = compUnitLifeDiv => {
 	let restAtt = 0
 
+	let compDivCard = document.querySelector('.computer-side .card-battle')
+
 	if (currentCompUnit.hp >= 0) {
 		if (currentCompUnit.def <= 0) {
 			currentCompUnit.hp -= currentPlayerUnit.att
+			compDivCard.classList.add('damage')
 			restAtt = 0
 			currentCompUnit.def = 0
+
+			if (currentCompUnit.hp <= 0) {
+				currentCompUnit.hp = 0
+			}
 		}
 		if (currentCompUnit.def < currentPlayerUnit.att && currentCompUnit.def > 0) {
 			restAtt = currentPlayerUnit.att - currentCompUnit.def
 			currentCompUnit.hp -= restAtt
 			currentCompUnit.def -= currentPlayerUnit.att
+			compDivCard.classList.add('damage')
+
 			if (currentCompUnit.def <= 0) {
 				currentCompUnit.def = 0
+			}
+			if (currentCompUnit.hp <= 0) {
+				currentCompUnit.hp = 0
 			}
 		}
 		if (currentCompUnit.def > currentPlayerUnit.att) {
@@ -318,18 +331,26 @@ const attackPlayer = compUnitLifeDiv => {
 		compUnitLifeDiv.style.width = currentCompUnit.hp + '%'
 		compUnitLifeDiv.nextElementSibling.innerHTML = currentCompUnit.hp + '%'
 
-		startBattle(currentPlayerUnit, currentCompUnit)
+		setTimeout(() => {
+			startBattle(currentPlayerUnit, currentCompUnit)
+		}, 1000)
 	}
 }
 
-const abbilitesPlayer = unit => {
-	if (unit.power >= 100) {
-		unit.ability()
-		unit.power -= 100
+const abbilitesPlayer = (playerPower) => {
+	let powerPlayer = document.querySelector('.player-side .card-battle')
+
+	if (currentPlayerUnit.power >= 100) {
+		currentPlayerUnit.power -= 100
+		currentPlayerUnit.ability()
+		powerPlayer.classList.add('power')
+
 	} else {
 		return
 	}
-	startBattle(currentPlayerUnit, currentCompUnit)
+	playerPower.style.width = currentPlayerUnit.power + '%'
+
+	setTimeout(() => {
+		startBattle(currentPlayerUnit, currentCompUnit)
+	}, 1000)
 }
-
-
