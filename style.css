@@ -372,6 +372,8 @@ body {
 	color: blue;
 }
 
+/* ----------------- END card style------------------------------------------ */
+
 /* Battle Container  */
 
 .battle-container {
@@ -384,10 +386,11 @@ body {
 	display: none;
 	justify-content: center;
 	background-color: var(--white-color);
-	border-radius: 2rem;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
 	z-index: 1000;
 	background-image: url(images/steelImg.png);
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .battle-container .side {
@@ -426,9 +429,45 @@ body {
 	z-index: 2;
 }
 
-.battle-container .card-battle.power {
-	background-color: blue;
+.battle-container .card-battle.defense {
+	background-image: url(images/shield.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	z-index: 2;
 }
+
+.battle-container .card-battle.power {
+	position: relative;
+}
+
+.battle-container .card-battle.power::after{
+	position: absolute;
+	content: '';
+	bottom:0;
+	width:100%;
+	height: 100%;
+	border-radius: 50%;
+	background-color: blue;
+	animation: flash 1s linear;
+}
+
+@keyframes flash {
+	0%{
+		transform: scale(0);
+		opacity:0;
+	}
+	50%{
+		opacity:1;
+	}
+	100%{
+		transform: scale(1);
+		opacity:0;
+	}
+}
+
+
+/* ----------------- END add card-battle extra class for damage, power, defend and dead------------------------------------------ */
 
 .battle-container .card-battle .life,
 .battle-container .card-battle .power {
@@ -625,6 +664,8 @@ body {
 	transform: translateY(-3px);
 }
 
+/* ----------------- END battle-container------------------------------------------ */
+
 /*    Media Querries    */
 
 @media (max-width: 1040px) {
@@ -720,7 +761,7 @@ body {
 	.battle-container {
 		flex-direction: column;
 		justify-content: space-between;
-		padding: 0;
+		padding: 2rem 0;
 		align-items: center;
 		height: 100%;
 		gap: 0;

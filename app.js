@@ -323,9 +323,11 @@ const attackPlayer = compUnitLifeDiv => {
 		}
 		if (currentCompUnit.def > currentPlayerUnit.att) {
 			currentCompUnit.def -= currentPlayerUnit.att
+			compDivCard.classList.add('defense')
 		}
 		if (currentCompUnit.def == currentPlayerUnit.att) {
 			currentCompUnit.def = 0
+			compDivCard.classList.add('defense')
 		}
 
 		compUnitLifeDiv.style.width = currentCompUnit.hp + '%'
@@ -337,15 +339,18 @@ const attackPlayer = compUnitLifeDiv => {
 	}
 }
 
-const abbilitesPlayer = (playerPower) => {
+const abbilitesPlayer = playerPower => {
 	let powerPlayer = document.querySelector('.player-side .card-battle')
 
 	if (currentPlayerUnit.power >= 100) {
 		currentPlayerUnit.power -= 100
 		currentPlayerUnit.ability()
+		if (currentPlayerUnit.hp >= 0) {
+			currentPlayerUnit.hp = 100
+		}
 		powerPlayer.classList.add('power')
-
-	} else {
+	}
+	 else {
 		return
 	}
 	playerPower.style.width = currentPlayerUnit.power + '%'
