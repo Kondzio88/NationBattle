@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			const tooltip = document.createElement('div')
 			tooltip.classList.add('tooltip')
-			tooltip.innerHTML = `Wybierz ${nationId}`
+			tooltip.innerHTML = `${nationId}`
 
 			nation.appendChild(tooltip)
 
@@ -43,6 +43,10 @@ let computerChoice = ''
 
 let currentPlayerUnit = null
 let currentCompUnit = null
+
+// Event Listener Bool Variable to avaible click
+
+let isClicked = false
 
 // Chose country by player and rander start Table
 
@@ -282,12 +286,22 @@ const startBattle = (playerUnit, compUnit) => {
 	// Listener for attack, defense and abillity
 
 	const attackBtn = htmlPlayerUnit.querySelector('.attack-btn')
-	attackBtn.addEventListener('click', () => attackPlayer(compUnitLifeDiv))
+	attackBtn.addEventListener('click', () => {
+		if (isClicked) {
+			attackPlayer(compUnitLifeDiv)
+		}
+	})
 	const abilityBtn = htmlPlayerUnit.querySelector('.ability-btn')
-	abilityBtn.addEventListener('click', () => abbilitesPlayer(playerUnitPowerDiv))
+	abilityBtn.addEventListener('click', () => {
+		if (isClicked) {
+			abbilitesPlayer(playerUnitPowerDiv)
+		}
+	})
 	htmlPlayerUnit.querySelector('.defense-btn')
 
 	battleContainer.style.display = 'flex'
+
+	drawAndStartMove()
 }
 
 // Units player abbilites functions , and setInterval animation
@@ -340,17 +354,13 @@ const attackPlayer = compUnitLifeDiv => {
 }
 
 const abbilitesPlayer = playerPower => {
-	let powerPlayer = document.querySelector('.player-side .card-battle')
-
 	if (currentPlayerUnit.power >= 100) {
 		currentPlayerUnit.power -= 100
 		currentPlayerUnit.ability()
 		if (currentPlayerUnit.hp >= 0) {
 			currentPlayerUnit.hp = 100
 		}
-		powerPlayer.classList.add('power')
-	}
-	 else {
+	} else {
 		return
 	}
 	playerPower.style.width = currentPlayerUnit.power + '%'
@@ -358,4 +368,31 @@ const abbilitesPlayer = playerPower => {
 	setTimeout(() => {
 		startBattle(currentPlayerUnit, currentCompUnit)
 	}, 1000)
+}
+
+// Draw first turn
+
+const drawAndStartMove = () => {
+	const drawInfoDiv = document.querySelector('.draw-info')
+	const drawTextresult = document.querySelector('.draw-text-result')
+
+	drawInfoDiv.style.display = 'flex'
+
+	let firtsMove = Math.floor(Math.random() * 2)
+	let playerFirst = 0
+	setTimeout(() => {
+		if (firtsMove === playerFirst) {
+			drawTextresult.innerHTML = 'Ture rozpoczyna Player'
+		} else {
+			drawTextresult.innerHTML = 'Ture rozpoczyna Komputer'
+		}
+		setTimeout(() => {
+			if (firtsMove === playerFirst) {
+				isClicked = true
+			} else {
+				isClicked = false
+			}
+			drawInfoDiv.style.display = 'none'
+		}, 3000)
+	}, 2000)
 }
