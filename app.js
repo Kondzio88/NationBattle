@@ -44,9 +44,19 @@ let computerChoice = ''
 let currentPlayerUnit = null
 let currentCompUnit = null
 
+let playerUnitLifeDiv = null
+let playerUnitPowerDiv = null
+
+let compUnitLifeDiv = null
+let compUnitPowerDiv = null
 // Event Listener Bool Variable to avaible click
 
 let isClicked = false
+
+// Turn and draw variables
+
+let playerFirst = 0
+let isDraw = false
 
 // Chose country by player and rander start Table
 
@@ -229,8 +239,8 @@ const startBattle = (playerUnit, compUnit) => {
 
 	//  Current life nad power object render and text span
 
-	let playerUnitLifeDiv = htmlPlayerUnit.querySelector('.life .progress')
-	let playerUnitPowerDiv = htmlPlayerUnit.querySelector('.power .progress')
+	playerUnitLifeDiv = htmlPlayerUnit.querySelector('.life .progress')
+	playerUnitPowerDiv = htmlPlayerUnit.querySelector('.power .progress')
 
 	playerUnitLifeDiv.style.width = playerUnit.hp + '%'
 	playerUnitPowerDiv.style.width = playerUnit.power + '%'
@@ -271,8 +281,8 @@ const startBattle = (playerUnit, compUnit) => {
 
 	//  Current life nad power object render and text span
 
-	let compUnitLifeDiv = htmlCompUnit.querySelector('.life .progress')
-	let compUnitPowerDiv = htmlCompUnit.querySelector('.power .progress')
+	compUnitLifeDiv = htmlCompUnit.querySelector('.life .progress')
+	compUnitPowerDiv = htmlCompUnit.querySelector('.power .progress')
 
 	compUnitLifeDiv.style.width = compUnit.hp + '%'
 	compUnitPowerDiv.style.width = compUnit.power + '%'
@@ -285,23 +295,28 @@ const startBattle = (playerUnit, compUnit) => {
 
 	// Listener for attack, defense and abillity
 
-	const attackBtn = htmlPlayerUnit.querySelector('.attack-btn')
-	attackBtn.addEventListener('click', () => {
-		if (isClicked) {
-			attackPlayer(compUnitLifeDiv)
-		}
+	const actionButtons = document.querySelectorAll('.player-side button')
+	actionButtons.forEach(button => {
+		button.addEventListener('click', () => {
+			if (isClicked) {
+				if (button.classList.contains('attack-btn')) {
+					attackPlayer(compUnitLifeDiv)
+				} else if (button.classList.contains('ability-btn')) {
+					abbilitesPlayer(playerUnitPowerDiv)
+				} else if (button.classList.contains('defense-btn')) {
+					// Zdefiniuj funkcję obrony, jeśli ją chcesz
+				}
+			}
+			isClicked = false
+			turnComp(currentCompUnit)
+		})
 	})
-	const abilityBtn = htmlPlayerUnit.querySelector('.ability-btn')
-	abilityBtn.addEventListener('click', () => {
-		if (isClicked) {
-			abbilitesPlayer(playerUnitPowerDiv)
-		}
-	})
-	htmlPlayerUnit.querySelector('.defense-btn')
 
 	battleContainer.style.display = 'flex'
 
-	drawAndStartMove()
+	if (!isDraw) {
+		drawAndStartMove()
+	}
 }
 
 // Units player abbilites functions , and setInterval animation
@@ -379,7 +394,7 @@ const drawAndStartMove = () => {
 	drawInfoDiv.style.display = 'flex'
 
 	let firtsMove = Math.floor(Math.random() * 2)
-	let playerFirst = 0
+
 	setTimeout(() => {
 		if (firtsMove === playerFirst) {
 			drawTextresult.innerHTML = 'Ture rozpoczyna Player'
@@ -391,8 +406,54 @@ const drawAndStartMove = () => {
 				isClicked = true
 			} else {
 				isClicked = false
+				turnComp(currentCompUnit)
 			}
 			drawInfoDiv.style.display = 'none'
 		}, 3000)
 	}, 2000)
+
+	isDraw = true
+}
+
+// Turn by comp
+
+const turnComp = () => {
+	let randomNumber = Math.floor(Math.random() * 3)
+	
+	if (randomNumber === 0) {
+		attackComp()
+
+	} else if (randomNumber === 1) {
+		abbilitesComp()
+	} else {
+		compUnitActivities = currentCompUnit.def
+	}
+	if (!isClicked) {
+	}
+	setTimeout(() => {
+		startBattle(currentPlayerUnit, currentCompUnit)
+	},1000)
+	
+}
+
+// Comp  Units Attack ,defense or abilities
+
+const attackComp = () => {
+	currentPlayerUnit.hp -= currentCompUnit.att
+
+	playerUnitLifeDiv.style.width = currentPlayerUnit.hp + '%'
+}
+
+const abbilitesComp = () => {
+	if (currentCompUnit.power >= 100) {
+		currentCompUnit.power -= 100
+		currentCompUnit.ability()
+		if (currentCompUnit.hp >= 0) {
+			currentCompUnit.hp = 100
+		}
+	} else {
+		return
+	}
+
+	compUnitPowerDiv.style.width = currentCompUnit.power + '%'
 }
