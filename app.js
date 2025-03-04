@@ -300,7 +300,7 @@ const startBattle = (playerUnit, compUnit) => {
 		button.addEventListener('click', () => {
 			if (isClicked) {
 				if (button.classList.contains('attack-btn')) {
-					attackPlayer(compUnitLifeDiv)
+					attack(compUnitLifeDiv,currentPlayerUnit,currentCompUnit)
 				} else if (button.classList.contains('ability-btn')) {
 					abbilitesPlayer(playerUnitPowerDiv)
 				} else if (button.classList.contains('defense-btn')) {
@@ -321,52 +321,54 @@ const startBattle = (playerUnit, compUnit) => {
 
 // Units player abbilites functions , and setInterval animation
 
-const attackPlayer = compUnitLifeDiv => {
+
+const attack = (lifeDiv,attacker ,deffender) => {
 	let restAtt = 0
 
-	let compDivCard = document.querySelector('.computer-side .card-battle')
+	let  = document.querySelector('.computer-side .card-battle')
 
-	if (currentCompUnit.hp >= 0) {
-		if (currentCompUnit.def <= 0) {
-			currentCompUnit.hp -= currentPlayerUnit.att
+	if (deffender.hp >= 0) {
+		if (deffender.def <= 0) {
+			deffender.hp -= attacker.att
 			compDivCard.classList.add('damage')
 			restAtt = 0
-			currentCompUnit.def = 0
+			deffender.def = 0
 
-			if (currentCompUnit.hp <= 0) {
-				currentCompUnit.hp = 0
+			if (deffender.hp <= 0) {
+				deffender.hp = 0
 			}
 		}
-		if (currentCompUnit.def < currentPlayerUnit.att && currentCompUnit.def > 0) {
-			restAtt = currentPlayerUnit.att - currentCompUnit.def
-			currentCompUnit.hp -= restAtt
-			currentCompUnit.def -= currentPlayerUnit.att
+		if (deffender.def < attacker.att && deffender.def > 0) {
+			restAtt = attacker.att - deffender.def
+			deffender.hp -= restAtt
+			deffender.def -= attacker.att
 			compDivCard.classList.add('damage')
 
-			if (currentCompUnit.def <= 0) {
-				currentCompUnit.def = 0
+			if (deffender.def <= 0) {
+				deffender.def = 0
 			}
-			if (currentCompUnit.hp <= 0) {
-				currentCompUnit.hp = 0
+			if (deffender.hp <= 0) {
+				deffender.hp = 0
 			}
 		}
-		if (currentCompUnit.def > currentPlayerUnit.att) {
-			currentCompUnit.def -= currentPlayerUnit.att
+		if (deffender.def > attacker.att) {
+			deffender.def -= attacker.att
 			compDivCard.classList.add('defense')
 		}
-		if (currentCompUnit.def == currentPlayerUnit.att) {
-			currentCompUnit.def = 0
+		if (deffender.def == attacker.att) {
+			deffender.def = 0
 			compDivCard.classList.add('defense')
 		}
 
-		compUnitLifeDiv.style.width = currentCompUnit.hp + '%'
-		compUnitLifeDiv.nextElementSibling.innerHTML = currentCompUnit.hp + '%'
+		lifeDiv.style.width = deffender.hp + '%'
+		lifeDiv.nextElementSibling.innerHTML = deffender.hp + '%'
 
 		setTimeout(() => {
 			startBattle(currentPlayerUnit, currentCompUnit)
 		}, 1000)
 	}
 }
+
 
 const abbilitesPlayer = playerPower => {
 	if (currentPlayerUnit.power >= 100) {
@@ -390,6 +392,7 @@ const abbilitesPlayer = playerPower => {
 const drawAndStartMove = () => {
 	const drawInfoDiv = document.querySelector('.draw-info')
 	const drawTextresult = document.querySelector('.draw-text-result')
+	const drawTextResultWhoStart = document.querySelector('.draw-text-result-who-starts')
 
 	drawInfoDiv.style.display = 'flex'
 
@@ -397,9 +400,11 @@ const drawAndStartMove = () => {
 
 	setTimeout(() => {
 		if (firtsMove === playerFirst) {
-			drawTextresult.innerHTML = 'Ture rozpoczyna Player'
+			drawTextresult.innerHTML = 'Ture rozpoczyna'
+			drawTextResultWhoStart.innerHTML = 'Player'
 		} else {
-			drawTextresult.innerHTML = 'Ture rozpoczyna Komputer'
+			drawTextresult.innerHTML = 'Ture rozpoczyna'
+			drawTextResultWhoStart.innerHTML = 'Komputer'
 		}
 		setTimeout(() => {
 			if (firtsMove === playerFirst) {
@@ -419,10 +424,9 @@ const drawAndStartMove = () => {
 
 const turnComp = () => {
 	let randomNumber = Math.floor(Math.random() * 3)
-	
-	if (randomNumber === 0) {
-		attackComp()
 
+	if (randomNumber === 0) {
+		attack(playerUnitLifeDiv,currentCompUnit,currentPlayerUnit)
 	} else if (randomNumber === 1) {
 		abbilitesComp()
 	} else {
@@ -432,17 +436,11 @@ const turnComp = () => {
 	}
 	setTimeout(() => {
 		startBattle(currentPlayerUnit, currentCompUnit)
-	},1000)
-	
+	}, 1000)
 }
 
 // Comp  Units Attack ,defense or abilities
 
-const attackComp = () => {
-	currentPlayerUnit.hp -= currentCompUnit.att
-
-	playerUnitLifeDiv.style.width = currentPlayerUnit.hp + '%'
-}
 
 const abbilitesComp = () => {
 	if (currentCompUnit.power >= 100) {
