@@ -32,6 +32,9 @@ const startGameContainer = document.querySelector('.start-game-container')
 const playerFlagLogo = document.querySelector('.player-logo')
 const playerCountryName = document.querySelector('.player-nation h1')
 
+let playerCardsArea = null
+let computerCardsArea = null
+
 let selectedPlayerUnit = ''
 let selectedCompUnit = ''
 
@@ -49,6 +52,11 @@ let playerUnitPowerDiv = null
 
 let compUnitLifeDiv = null
 let compUnitPowerDiv = null
+
+let compDivBattleCard = null
+let playerDivBattleCard = null
+
+let turnNumber = 0
 // Event Listener Bool Variable to avaible click
 
 let isClicked = false
@@ -62,7 +70,7 @@ let isDraw = false
 
 const choseCountry = nation => {
 	let nationId = nation.querySelector('img').alt
-	const playerCardsArea = document.querySelector('.player-cards')
+	playerCardsArea = document.querySelector('.player-cards')
 	renderStartTable(nationId, playerCardsArea)
 	startGameContainer.style.display = 'none'
 	computerRandomChoice(nationId)
@@ -95,7 +103,7 @@ const renderStartTable = (nationId, playerCardsArea) => {
 // computer choice and render his table without nationId which chose player
 
 const computerRandomChoice = nationId => {
-	const computerCardsArea = document.querySelector('.computer-cards')
+	computerCardsArea = document.querySelector('.computer-cards')
 	const computerFlagLogo = document.querySelector('.computer-logo')
 	const computerNationName = document.querySelector('.computer-nation h1')
 
@@ -198,6 +206,9 @@ function getRandomCompUnit(computerArray) {
 // Start battle  ,render battle field function
 
 const startBattle = (playerUnit, compUnit) => {
+
+	turnNumber++
+
 	currentPlayerUnit = playerUnit
 	currentCompUnit = compUnit
 
@@ -248,6 +259,8 @@ const startBattle = (playerUnit, compUnit) => {
 	htmlPlayerUnit.querySelector('.life .progress-text').innerHTML = playerUnit.hp + '%'
 	htmlPlayerUnit.querySelector('.power .progress-text').innerHTML = playerUnit.power + '%'
 
+	playerDivBattleCard = htmlPlayerUnit
+
 	// Comp render card at battlefield
 
 	const htmlCompUnit = document.createElement('div')
@@ -290,6 +303,8 @@ const startBattle = (playerUnit, compUnit) => {
 	htmlCompUnit.querySelector('.life .progress-text').innerHTML = compUnit.hp + '%'
 	htmlCompUnit.querySelector('.power .progress-text').innerHTML = compUnit.power + '%'
 
+	compDivBattleCard = htmlCompUnit
+
 	battlePlayerCard.appendChild(htmlPlayerUnit)
 	battleComputerCard.appendChild(htmlCompUnit)
 
@@ -300,9 +315,9 @@ const startBattle = (playerUnit, compUnit) => {
 		button.addEventListener('click', () => {
 			if (isClicked) {
 				if (button.classList.contains('attack-btn')) {
-					attack(compUnitLifeDiv,currentPlayerUnit,currentCompUnit)
+					attack(compUnitLifeDiv, currentPlayerUnit, currentCompUnit, compDivBattleCard)
 				} else if (button.classList.contains('ability-btn')) {
-					abbilitesPlayer(playerUnitPowerDiv)
+					abbilites(currentPlayerUnit, playerUnitPowerDiv)
 				} else if (button.classList.contains('defense-btn')) {
 					// Zdefiniuj funkcję obrony, jeśli ją chcesz
 				}
@@ -312,25 +327,36 @@ const startBattle = (playerUnit, compUnit) => {
 		})
 	})
 
-	battleContainer.style.display = 'flex'
+	if (turnNumber < 3) {
+		battleContainer.style.display = 'flex'
+	} else {
+		battleContainer.style.display = 'none'
+		isDraw = true
+	}
+
+	if (turnNumber === 3) {
+		endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
+		turnNumber = 0
+	}
 
 	if (!isDraw) {
 		drawAndStartMove()
 	}
+
+	console.log(turnNumber);
 }
 
 // Units player abbilites functions , and setInterval animation
 
-
-const attack = (lifeDiv,attacker ,deffender) => {
+const attack = (lifeDiv, attacker, deffender, divCard) => {
 	let restAtt = 0
 
-	let  = document.querySelector('.computer-side .card-battle')
+	let = document.querySelector('.computer-side .card-battle')
 
 	if (deffender.hp >= 0) {
 		if (deffender.def <= 0) {
 			deffender.hp -= attacker.att
-			compDivCard.classList.add('damage')
+			divCard.classList.add('damage')
 			restAtt = 0
 			deffender.def = 0
 
@@ -342,7 +368,7 @@ const attack = (lifeDiv,attacker ,deffender) => {
 			restAtt = attacker.att - deffender.def
 			deffender.hp -= restAtt
 			deffender.def -= attacker.att
-			compDivCard.classList.add('damage')
+			divCard.classList.add('damage')
 
 			if (deffender.def <= 0) {
 				deffender.def = 0
@@ -353,11 +379,11 @@ const attack = (lifeDiv,attacker ,deffender) => {
 		}
 		if (deffender.def > attacker.att) {
 			deffender.def -= attacker.att
-			compDivCard.classList.add('defense')
+			divCard.classList.add('defense')
 		}
 		if (deffender.def == attacker.att) {
 			deffender.def = 0
-			compDivCard.classList.add('defense')
+			divCard.classList.add('defense')
 		}
 
 		lifeDiv.style.width = deffender.hp + '%'
@@ -369,18 +395,17 @@ const attack = (lifeDiv,attacker ,deffender) => {
 	}
 }
 
-
-const abbilitesPlayer = playerPower => {
-	if (currentPlayerUnit.power >= 100) {
-		currentPlayerUnit.power -= 100
-		currentPlayerUnit.ability()
-		if (currentPlayerUnit.hp >= 0) {
-			currentPlayerUnit.hp = 100
+const abbilites = (unit, divPower) => {
+	if (unit.power >= 100) {
+		unit.power -= 100
+		unit.ability()
+		if (unit.hp >= 0) {
+			unit.hp = 100
 		}
 	} else {
 		return
 	}
-	playerPower.style.width = currentPlayerUnit.power + '%'
+	divPower.style.width = unit.power + '%'
 
 	setTimeout(() => {
 		startBattle(currentPlayerUnit, currentCompUnit)
@@ -390,6 +415,9 @@ const abbilitesPlayer = playerPower => {
 // Draw first turn
 
 const drawAndStartMove = () => {
+	isDraw = true
+	
+
 	const drawInfoDiv = document.querySelector('.draw-info')
 	const drawTextresult = document.querySelector('.draw-text-result')
 	const drawTextResultWhoStart = document.querySelector('.draw-text-result-who-starts')
@@ -408,7 +436,7 @@ const drawAndStartMove = () => {
 		}
 		setTimeout(() => {
 			if (firtsMove === playerFirst) {
-				isClicked = true
+				turnPlayer()
 			} else {
 				isClicked = false
 				turnComp(currentCompUnit)
@@ -417,41 +445,56 @@ const drawAndStartMove = () => {
 		}, 3000)
 	}, 2000)
 
-	isDraw = true
+	
 }
 
-// Turn by comp
+// Turn Player and Comp
 
 const turnComp = () => {
+	
 	let randomNumber = Math.floor(Math.random() * 3)
+	
+	if (turnNumber < 3) {
+	
+		if (randomNumber === 0) {
+			attack(playerUnitLifeDiv, currentCompUnit, currentPlayerUnit, playerDivBattleCard)
+		} else if (randomNumber === 1) {
+			abbilites(currentCompUnit, compUnitPowerDiv)
+		} else {
+			compUnitActivities = currentCompUnit.def
+		}
 
-	if (randomNumber === 0) {
-		attack(playerUnitLifeDiv,currentCompUnit,currentPlayerUnit)
-	} else if (randomNumber === 1) {
-		abbilitesComp()
-	} else {
-		compUnitActivities = currentCompUnit.def
+		setTimeout(() => {
+			startBattle(currentPlayerUnit, currentCompUnit)
+			if (turnNumber < 3) {
+				turnPlayer()
+			}
+		}, 1000)
 	}
-	if (!isClicked) {
-	}
-	setTimeout(() => {
-		startBattle(currentPlayerUnit, currentCompUnit)
-	}, 1000)
 }
 
-// Comp  Units Attack ,defense or abilities
-
-
-const abbilitesComp = () => {
-	if (currentCompUnit.power >= 100) {
-		currentCompUnit.power -= 100
-		currentCompUnit.ability()
-		if (currentCompUnit.hp >= 0) {
-			currentCompUnit.hp = 100
-		}
-	} else {
-		return
+const turnPlayer = () => {
+	if (turnNumber < 3) {
+		isClicked = true
+		
 	}
+}
 
-	compUnitPowerDiv.style.width = currentCompUnit.power + '%'
+const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
+	if (turnNumber === 3) {
+		let playerIndex = arrayPlayer.findIndex(x => x.name === currentPlayer.name)
+		let compIndex = arrayComp.findIndex(x => x.name === currentComp.name)
+
+		if (playerIndex !== -1) {
+			arrayPlayer[playerIndex] = { ...currentPlayer }
+			renderTable(arrayPlayer, playerCardsArea)
+		}
+		if (compIndex !== -1) {
+			arrayComp[compIndex] = { ...currentComp }
+			renderTable(arrayComp, computerCardsArea)
+		}
+
+		console.log('Zaktualizowane jednostki:', arrayPlayer, arrayComp)
+		isDraw = false
+	}
 }
