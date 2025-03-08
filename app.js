@@ -191,6 +191,10 @@ const choseUnit = function (data, computerArray) {
 	selectedPlayerUnit = data
 
 	selectedCompUnit = getRandomCompUnit(computerArray)
+
+	if (!isDraw) {
+		drawAndStartMove()
+	}
 }
 
 function getRandomCompUnit(computerArray) {
@@ -207,7 +211,7 @@ function getRandomCompUnit(computerArray) {
 
 const startBattle = (playerUnit, compUnit) => {
 
-	turnNumber++
+	console.log('poczatek start battle',turnNumber);
 
 	currentPlayerUnit = playerUnit
 	currentCompUnit = compUnit
@@ -322,28 +326,30 @@ const startBattle = (playerUnit, compUnit) => {
 					// Zdefiniuj funkcję obrony, jeśli ją chcesz
 				}
 			}
+			
+			
+			turnNumber++
 			isClicked = false
+			console.log('klik gracza',turnNumber);
 			turnComp(currentCompUnit)
 		})
 	})
 
-	if (turnNumber < 3) {
+	if (turnNumber < 2) {
 		battleContainer.style.display = 'flex'
-	} else {
+	} if(turnNumber === 2) {
 		battleContainer.style.display = 'none'
 		isDraw = true
 	}
 
-	if (turnNumber === 3) {
+	console.log('turnNumber na dole Start battle',turnNumber);
+
+	if (turnNumber === 2) {
 		endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
-		turnNumber = 0
+		console.log('turnNumbere reset', turnNumber);
 	}
 
-	if (!isDraw) {
-		drawAndStartMove()
-	}
-
-	console.log(turnNumber);
+	
 }
 
 // Units player abbilites functions , and setInterval animation
@@ -415,9 +421,9 @@ const abbilites = (unit, divPower) => {
 // Draw first turn
 
 const drawAndStartMove = () => {
+	
 	isDraw = true
 	
-
 	const drawInfoDiv = document.querySelector('.draw-info')
 	const drawTextresult = document.querySelector('.draw-text-result')
 	const drawTextResultWhoStart = document.querySelector('.draw-text-result-who-starts')
@@ -451,10 +457,11 @@ const drawAndStartMove = () => {
 // Turn Player and Comp
 
 const turnComp = () => {
-	
+	console.log('runda komp przed Settime',turnNumber);
+
 	let randomNumber = Math.floor(Math.random() * 3)
 	
-	if (turnNumber < 3) {
+	if (turnNumber < 2) {
 	
 		if (randomNumber === 0) {
 			attack(playerUnitLifeDiv, currentCompUnit, currentPlayerUnit, playerDivBattleCard)
@@ -462,26 +469,33 @@ const turnComp = () => {
 			abbilites(currentCompUnit, compUnitPowerDiv)
 		} else {
 			compUnitActivities = currentCompUnit.def
+			console.log('komputer uzyl defense');
 		}
 
 		setTimeout(() => {
-			startBattle(currentPlayerUnit, currentCompUnit)
-			if (turnNumber < 3) {
+			
+			if (turnNumber < 2) {
+				turnNumber++
+				console.log('runda komp po Settime',turnNumber);
 				turnPlayer()
+				startBattle(currentPlayerUnit, currentCompUnit)
 			}
 		}, 1000)
 	}
 }
 
 const turnPlayer = () => {
-	if (turnNumber < 3) {
+	if (turnNumber < 2) {
 		isClicked = true
 		
 	}
 }
 
 const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
-	if (turnNumber === 3) {
+
+	console.log('wywolanie end turn');
+
+	if (turnNumber === 2) {
 		let playerIndex = arrayPlayer.findIndex(x => x.name === currentPlayer.name)
 		let compIndex = arrayComp.findIndex(x => x.name === currentComp.name)
 
@@ -494,7 +508,8 @@ const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
 			renderTable(arrayComp, computerCardsArea)
 		}
 
-		console.log('Zaktualizowane jednostki:', arrayPlayer, arrayComp)
 		isDraw = false
+		console.log('endTurn ', turnNumber)
 	}
+	turnNumber = 0
 }
