@@ -172,6 +172,16 @@ const renderTable = (nationArr, renderArea) => {
 		elHtml.querySelector('.life .progress').style.width = hp + '%'
 		elHtml.querySelector('.power .progress').style.width = power + '%'
 
+		if (hp <= 70 && hp > 30) {
+			elHtml.querySelector('.life .progress').style.backgroundColor = 'orange'
+		}
+		if (hp <= 30) {
+			elHtml.querySelector('.life .progress').style.backgroundColor = 'red'
+		}
+
+		elHtml.querySelector('.life .progress-text').innerHTML = hp + '%'
+		elHtml.querySelector('.power .progress-text').innerHTML = power + '%'
+
 		elHtml.unitData = { hp, power, name, type, man, att, def, info, ability, img }
 
 		renderArea.appendChild(elHtml)
@@ -210,9 +220,6 @@ function getRandomCompUnit(computerArray) {
 // Start battle  ,render battle field function
 
 const startBattle = (playerUnit, compUnit) => {
-
-	console.log('poczatek start battle',turnNumber);
-
 	currentPlayerUnit = playerUnit
 	currentCompUnit = compUnit
 
@@ -263,6 +270,16 @@ const startBattle = (playerUnit, compUnit) => {
 	htmlPlayerUnit.querySelector('.life .progress-text').innerHTML = playerUnit.hp + '%'
 	htmlPlayerUnit.querySelector('.power .progress-text').innerHTML = playerUnit.power + '%'
 
+	if (playerUnit.hp == 100) {
+		playerUnitLifeDiv.style.backgroundColor = 'green'
+	}
+	if (playerUnit.hp <= 70 && playerUnit.hp > 30) {
+		playerUnitLifeDiv.style.backgroundColor = 'orange'
+	}
+	if (playerUnit.hp <= 30) {
+		playerUnitLifeDiv.style.backgroundColor = 'red'
+	}
+
 	playerDivBattleCard = htmlPlayerUnit
 
 	// Comp render card at battlefield
@@ -307,6 +324,16 @@ const startBattle = (playerUnit, compUnit) => {
 	htmlCompUnit.querySelector('.life .progress-text').innerHTML = compUnit.hp + '%'
 	htmlCompUnit.querySelector('.power .progress-text').innerHTML = compUnit.power + '%'
 
+	if (compUnit.hp == 100) {
+		compUnitLifeDiv.style.backgroundColor = 'green'
+	}
+	if (compUnit.hp <= 70 && compUnit.hp > 30) {
+		compUnitLifeDiv.style.backgroundColor = 'orange'
+	}
+	if (compUnit.hp <= 30) {
+		compUnitLifeDiv.style.backgroundColor = 'red'
+	}
+
 	compDivBattleCard = htmlCompUnit
 
 	battlePlayerCard.appendChild(htmlPlayerUnit)
@@ -326,30 +353,24 @@ const startBattle = (playerUnit, compUnit) => {
 					// Zdefiniuj funkcję obrony, jeśli ją chcesz
 				}
 			}
-			
-			
+
 			turnNumber++
 			isClicked = false
-			console.log('klik gracza',turnNumber);
 			turnComp(currentCompUnit)
 		})
 	})
 
 	if (turnNumber < 2) {
 		battleContainer.style.display = 'flex'
-	} if(turnNumber === 2) {
+	}
+	if (turnNumber === 2) {
 		battleContainer.style.display = 'none'
 		isDraw = true
 	}
 
-	console.log('turnNumber na dole Start battle',turnNumber);
-
 	if (turnNumber === 2) {
 		endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
-		console.log('turnNumbere reset', turnNumber);
 	}
-
-	
 }
 
 // Units player abbilites functions , and setInterval animation
@@ -395,6 +416,13 @@ const attack = (lifeDiv, attacker, deffender, divCard) => {
 		lifeDiv.style.width = deffender.hp + '%'
 		lifeDiv.nextElementSibling.innerHTML = deffender.hp + '%'
 
+		if (deffender.hp <= 70 && deffender.hp > 30) {
+			lifeDiv.style.backgroundColor = 'orange'
+		}
+		if (deffender.hp <= 30) {
+			lifeDiv.style.backgroundColor = 'red'
+		}
+
 		setTimeout(() => {
 			startBattle(currentPlayerUnit, currentCompUnit)
 		}, 1000)
@@ -405,9 +433,6 @@ const abbilites = (unit, divPower) => {
 	if (unit.power >= 100) {
 		unit.power -= 100
 		unit.ability()
-		if (unit.hp >= 0) {
-			unit.hp = 100
-		}
 	} else {
 		return
 	}
@@ -421,9 +446,8 @@ const abbilites = (unit, divPower) => {
 // Draw first turn
 
 const drawAndStartMove = () => {
-	
 	isDraw = true
-	
+
 	const drawInfoDiv = document.querySelector('.draw-info')
 	const drawTextresult = document.querySelector('.draw-text-result')
 	const drawTextResultWhoStart = document.querySelector('.draw-text-result-who-starts')
@@ -450,33 +474,25 @@ const drawAndStartMove = () => {
 			drawInfoDiv.style.display = 'none'
 		}, 3000)
 	}, 2000)
-
-	
 }
 
 // Turn Player and Comp
 
 const turnComp = () => {
-	console.log('runda komp przed Settime',turnNumber);
-
 	let randomNumber = Math.floor(Math.random() * 3)
-	
+
 	if (turnNumber < 2) {
-	
 		if (randomNumber === 0) {
 			attack(playerUnitLifeDiv, currentCompUnit, currentPlayerUnit, playerDivBattleCard)
 		} else if (randomNumber === 1) {
 			abbilites(currentCompUnit, compUnitPowerDiv)
 		} else {
 			compUnitActivities = currentCompUnit.def
-			console.log('komputer uzyl defense');
 		}
 
 		setTimeout(() => {
-			
 			if (turnNumber < 2) {
 				turnNumber++
-				console.log('runda komp po Settime',turnNumber);
 				turnPlayer()
 				startBattle(currentPlayerUnit, currentCompUnit)
 			}
@@ -487,14 +503,10 @@ const turnComp = () => {
 const turnPlayer = () => {
 	if (turnNumber < 2) {
 		isClicked = true
-		
 	}
 }
 
 const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
-
-	console.log('wywolanie end turn');
-
 	if (turnNumber === 2) {
 		let playerIndex = arrayPlayer.findIndex(x => x.name === currentPlayer.name)
 		let compIndex = arrayComp.findIndex(x => x.name === currentComp.name)
@@ -509,7 +521,6 @@ const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
 		}
 
 		isDraw = false
-		console.log('endTurn ', turnNumber)
 	}
 	turnNumber = 0
 }

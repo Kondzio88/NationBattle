@@ -149,6 +149,9 @@ const merkava = new Units(
 
 const mosad = new Units('Mosad', 'Infa', 'Land', 40, 50, 'images/israel-infantry.png', 'wywiad + 30 hp', function () {
 	this.hp += 30
+	if(this.hp >= 100){
+		this.hp = 100
+	}
 })
 
 const haaver = new Units(
@@ -194,6 +197,9 @@ const zhonguo = new Units(
 	function () {
 		this.def += 10
 		this.hp += 10
+		if(this.hp >= 100){
+			this.hp = 100
+		}
 	}
 )
 
