@@ -343,7 +343,7 @@ const startBattle = (playerUnit, compUnit) => {
 
 	const actionButtons = document.querySelectorAll('.player-side button')
 	actionButtons.forEach(button => {
-		button.addEventListener('click', () => {
+		button.addEventListener('click', async () => {
 			if (isClicked) {
 				if (button.classList.contains('attack-btn')) {
 					attack(compUnitLifeDiv, currentPlayerUnit, currentCompUnit, compDivBattleCard)
@@ -353,12 +353,23 @@ const startBattle = (playerUnit, compUnit) => {
 					// Zdefiniuj funkcję obrony, jeśli ją chcesz
 				}
 			}
+			console.log(turnNumber, 'przed await')
+
+			await displayBattleResult()
 
 			turnNumber++
 			isClicked = false
-			turnComp(currentCompUnit)
+
+			console.log(turnNumber, 'po await w startBtale')
+			if (turnNumber === 2) {
+				endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
+				battleContainer.style.display = 'none'
+			} else {
+				turnComp(currentCompUnit)
+			}
 		})
 	})
+	console.log(turnNumber, '2 linia startbattle')
 
 	if (turnNumber < 2) {
 		battleContainer.style.display = 'flex'
@@ -371,6 +382,7 @@ const startBattle = (playerUnit, compUnit) => {
 	if (turnNumber === 2) {
 		endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
 	}
+	console.log(turnNumber, '3 linia startBattle')
 }
 
 // Units player abbilites functions , and setInterval animation
@@ -443,7 +455,7 @@ const abbilites = (unit, divPower) => {
 	}, 1000)
 }
 
-// Draw first turn
+// Draw first turn function
 
 const drawAndStartMove = () => {
 	isDraw = true
@@ -452,6 +464,7 @@ const drawAndStartMove = () => {
 	const drawTextresult = document.querySelector('.draw-text-result')
 	const drawTextResultWhoStart = document.querySelector('.draw-text-result-who-starts')
 
+	drawTextResultWhoStart.innerHTML = ''
 	drawInfoDiv.style.display = 'flex'
 
 	let firtsMove = Math.floor(Math.random() * 2)
@@ -466,7 +479,7 @@ const drawAndStartMove = () => {
 		}
 		setTimeout(() => {
 			if (firtsMove === playerFirst) {
-				turnPlayer()
+				isClicked = true
 			} else {
 				isClicked = false
 				turnComp(currentCompUnit)
@@ -476,9 +489,9 @@ const drawAndStartMove = () => {
 	}, 2000)
 }
 
-// Turn Player and Comp
+// Turn Player and Comp functions
 
-const turnComp = () => {
+const turnComp = async () => {
 	let randomNumber = Math.floor(Math.random() * 3)
 
 	if (turnNumber < 2) {
@@ -490,21 +503,27 @@ const turnComp = () => {
 			compUnitActivities = currentCompUnit.def
 		}
 
+		await displayBattleResult()
+
 		setTimeout(() => {
 			if (turnNumber < 2) {
 				turnNumber++
-				turnPlayer()
 				startBattle(currentPlayerUnit, currentCompUnit)
+				isClicked = true
 			}
 		}, 1000)
 	}
 }
 
-const turnPlayer = () => {
-	if (turnNumber < 2) {
-		isClicked = true
-	}
-}
+// const turnPlayer = () => {
+// 	if (turnNumber < 2) {
+// 		isClicked = true
+// 	}else{
+// 		isClicked = false
+// 	}
+// }
+
+// End turn function
 
 const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
 	if (turnNumber === 2) {
@@ -523,4 +542,21 @@ const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
 		isDraw = false
 	}
 	turnNumber = 0
+}
+
+const displayBattleResult = async (attacker, deffender) => {
+	const battleResultDiv = document.querySelector('.battle-result')
+	const attackerUnitName = document.querySelector('.attack-name')
+	const deffenderUnitName = document.querySelector('.deffend-name')
+	const button = document.querySelector('.btn-ok')
+
+	await new Promise(res => setTimeout(res, 1000))
+
+	battleResultDiv.style.display = 'flex'
+
+	await new Promise(res => {
+		button.addEventListener('click', res, { once: true })
+	})
+
+	battleResultDiv.style.display = 'none'
 }
