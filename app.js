@@ -57,6 +57,11 @@ let compDivBattleCard = null
 let playerDivBattleCard = null
 
 let turnNumber = 0
+
+// After Battle Display Variable
+
+let textAfterBattle = 0
+
 // Event Listener Bool Variable to avaible click
 
 let isClicked = false
@@ -346,30 +351,31 @@ const startBattle = (playerUnit, compUnit) => {
 		button.addEventListener('click', async () => {
 			if (isClicked) {
 				if (button.classList.contains('attack-btn')) {
+					textAfterBattle = 1
 					attack(compUnitLifeDiv, currentPlayerUnit, currentCompUnit, compDivBattleCard)
 				} else if (button.classList.contains('ability-btn')) {
+					textAfterBattle = 2
 					abbilites(currentPlayerUnit, playerUnitPowerDiv)
 				} else if (button.classList.contains('defense-btn')) {
-					// Zdefiniuj funkcję obrony, jeśli ją chcesz
+					textAfterBattle = 3
 				}
 			}
-			console.log(turnNumber, 'przed await')
 
-			await displayBattleResult()
+			await displayBattleResult(currentPlayerUnit, currentCompUnit)
 
 			turnNumber++
 			isClicked = false
 
-			console.log(turnNumber, 'po await w startBtale')
 			if (turnNumber === 2) {
-				endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
-				battleContainer.style.display = 'none'
+				setTimeout(() => {
+					battleContainer.style.display = 'none'
+					endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
+				}, 1000)
 			} else {
 				turnComp(currentCompUnit)
 			}
 		})
 	})
-	console.log(turnNumber, '2 linia startbattle')
 
 	if (turnNumber < 2) {
 		battleContainer.style.display = 'flex'
@@ -382,7 +388,6 @@ const startBattle = (playerUnit, compUnit) => {
 	if (turnNumber === 2) {
 		endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
 	}
-	console.log(turnNumber, '3 linia startBattle')
 }
 
 // Units player abbilites functions , and setInterval animation
@@ -497,13 +502,16 @@ const turnComp = async () => {
 	if (turnNumber < 2) {
 		if (randomNumber === 0) {
 			attack(playerUnitLifeDiv, currentCompUnit, currentPlayerUnit, playerDivBattleCard)
+			textAfterBattle = 1
 		} else if (randomNumber === 1) {
 			abbilites(currentCompUnit, compUnitPowerDiv)
+			textAfterBattle = 2
 		} else {
 			compUnitActivities = currentCompUnit.def
+			textAfterBattle = 3
 		}
 
-		await displayBattleResult()
+		await displayBattleResult(currentCompUnit, currentPlayerUnit)
 
 		setTimeout(() => {
 			if (turnNumber < 2) {
@@ -544,11 +552,38 @@ const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
 	turnNumber = 0
 }
 
+// Display After Battle functions 
+
 const displayBattleResult = async (attacker, deffender) => {
 	const battleResultDiv = document.querySelector('.battle-result')
 	const attackerUnitName = document.querySelector('.attack-name')
+	const textAttack = document.querySelector('.text-attack')
+	const textDeffense = document.querySelector('.text-deffense')
 	const deffenderUnitName = document.querySelector('.deffend-name')
 	const button = document.querySelector('.btn-ok')
+
+	attackerUnitName.innerHTML = ''
+	textAttack.innerHTML = ''
+	deffenderUnitName.innerHTML = ''
+	textDeffense.innerHTML = ''
+
+	attackerUnitName.innerHTML = `${attacker.name}`
+	if (textAfterBattle == 1) {
+		textAttack.innerHTML = `Zaatakowala z sila ${attacker.att}`
+		deffenderUnitName.innerHTML = `${deffender.name}`
+		textDeffense.innerHTML = `zostalo ${deffender.def} obrony`
+		if (deffender.hp < 100) {
+			deffenderUnitName.innerHTML = `${deffender.name}`
+			deffenderUnitName.innerHTML = `${deffender.name} `
+			textDeffense.innerHTML = `zostalo 0 oborny <br> zostalo ${deffender.hp} zycia`
+		}
+	}
+	if (textAfterBattle == 2) {
+		textAttack.innerHTML = `Uzyl Umiejetnosci ${attacker.info}`
+	}
+	if (textAfterBattle == 3) {
+		textAttack.innerHTML = `Broni sie oborna ${attacker.def}`
+	}
 
 	await new Promise(res => setTimeout(res, 1000))
 
@@ -558,5 +593,6 @@ const displayBattleResult = async (attacker, deffender) => {
 		button.addEventListener('click', res, { once: true })
 	})
 
+	textAfterBattle = 0
 	battleResultDiv.style.display = 'none'
 }

@@ -521,20 +521,29 @@ body {
 
 .battle-result {
 	display: none;
+	gap: 1rem;
+	justify-content: center;
 }
 
 .battle-result .unit-name {
-	font-size: 5rem;
+	font-size: 4rem;
+	font-weight: bold;
 	text-shadow: 2px 2px 1px white;
 }
 
+.battle-result .unit-text{
+	font-size: 3rem;
+	text-align: center;
+}
+
 .battle-result .btn-ok {
-	width: 30rem;
+	width: 20rem;
 	height: 10rem;
 	background-color: black;
 	color: red;
-	cursor:pointer;
+	cursor: pointer;
 	font-size: 5rem;
+	margin-top:10rem;
 }
 /* ----------------- END add card-battle extra class for damage, power, defend and dead------------------------------------------ */
 
