@@ -503,35 +503,36 @@ const turnComp = async () => {
 		if (randomNumber === 0) {
 			attack(playerUnitLifeDiv, currentCompUnit, currentPlayerUnit, playerDivBattleCard)
 			textAfterBattle = 1
-		} else if (randomNumber === 1) {
+		}
+		if (randomNumber === 1 && currentCompUnit.power > 0) {
 			abbilites(currentCompUnit, compUnitPowerDiv)
 			textAfterBattle = 2
-		} else {
+		} else if (randomNumber === 1 && currentCompUnit.power === 0) {
+			turnComp()
+			return
+		}
+
+		if (randomNumber === 2 && currentCompUnit.def !== 0) {
 			compUnitActivities = currentCompUnit.def
 			textAfterBattle = 3
+		} else if (randomNumber === 2 && currentCompUnit.def === 0) {
+			turnComp()
+			return
 		}
 
 		await displayBattleResult(currentCompUnit, currentPlayerUnit)
 
 		setTimeout(() => {
 			if (turnNumber < 2) {
+				isClicked = true
 				turnNumber++
 				startBattle(currentPlayerUnit, currentCompUnit)
-				isClicked = true
 			}
 		}, 1000)
 	}
 }
 
-// const turnPlayer = () => {
-// 	if (turnNumber < 2) {
-// 		isClicked = true
-// 	}else{
-// 		isClicked = false
-// 	}
-// }
-
-// End turn function
+// End Turn Function
 
 const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
 	if (turnNumber === 2) {
@@ -540,19 +541,26 @@ const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
 
 		if (playerIndex !== -1) {
 			arrayPlayer[playerIndex] = { ...currentPlayer }
-			renderTable(arrayPlayer, playerCardsArea)
 		}
 		if (compIndex !== -1) {
 			arrayComp[compIndex] = { ...currentComp }
-			renderTable(arrayComp, computerCardsArea)
 		}
+
+		let filterArrayPlayer = arrayPlayer.filter(x => x.hp > 0)
+		let filterArrayComp = arrayComp.filter(x => x.hp > 0)
+
+		arrayPlayer.splice(0, arrayPlayer.length, ...filterArrayPlayer)
+		arrayComp.splice(0, arrayComp.length, ...filterArrayComp)
+
+		renderTable(arrayPlayer, playerCardsArea)
+		renderTable(arrayComp, computerCardsArea)
 
 		isDraw = false
 	}
 	turnNumber = 0
 }
 
-// Display After Battle functions 
+// Display After Battle functions
 
 const displayBattleResult = async (attacker, deffender) => {
 	const battleResultDiv = document.querySelector('.battle-result')
