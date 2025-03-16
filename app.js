@@ -366,7 +366,7 @@ const startBattle = (playerUnit, compUnit) => {
 			turnNumber++
 			isClicked = false
 
-			if (turnNumber === 2) {
+			if (turnNumber === 2 || currentPlayerUnit.hp <= 0 || currentCompUnit.hp <= 0) {
 				setTimeout(() => {
 					battleContainer.style.display = 'none'
 					endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
@@ -523,6 +523,13 @@ const turnComp = async () => {
 		await displayBattleResult(currentCompUnit, currentPlayerUnit)
 
 		setTimeout(() => {
+			if (turnNumber === 2 || currentPlayerUnit.hp <= 0 || currentCompUnit.hp <= 0) {
+				endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
+				console.log('comp turn przed return');
+				return
+				console.log('comp turn po return');
+				// trzeba battle display container dac na none i zbadac turn Number jakijest i czy sie resetuje
+			}
 			if (turnNumber < 2) {
 				isClicked = true
 				turnNumber++
@@ -535,28 +542,28 @@ const turnComp = async () => {
 // End Turn Function
 
 const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
-	if (turnNumber === 2) {
-		let playerIndex = arrayPlayer.findIndex(x => x.name === currentPlayer.name)
-		let compIndex = arrayComp.findIndex(x => x.name === currentComp.name)
+	console.log('end turn w end turn')
 
-		if (playerIndex !== -1) {
-			arrayPlayer[playerIndex] = { ...currentPlayer }
-		}
-		if (compIndex !== -1) {
-			arrayComp[compIndex] = { ...currentComp }
-		}
+	let playerIndex = arrayPlayer.findIndex(x => x.name === currentPlayer.name)
+	let compIndex = arrayComp.findIndex(x => x.name === currentComp.name)
 
-		let filterArrayPlayer = arrayPlayer.filter(x => x.hp > 0)
-		let filterArrayComp = arrayComp.filter(x => x.hp > 0)
-
-		arrayPlayer.splice(0, arrayPlayer.length, ...filterArrayPlayer)
-		arrayComp.splice(0, arrayComp.length, ...filterArrayComp)
-
-		renderTable(arrayPlayer, playerCardsArea)
-		renderTable(arrayComp, computerCardsArea)
-
-		isDraw = false
+	if (playerIndex !== -1) {
+		arrayPlayer[playerIndex] = { ...currentPlayer }
 	}
+	if (compIndex !== -1) {
+		arrayComp[compIndex] = { ...currentComp }
+	}
+
+	let filterArrayPlayer = arrayPlayer.filter(x => x.hp > 0)
+	let filterArrayComp = arrayComp.filter(x => x.hp > 0)
+
+	arrayPlayer.splice(0, arrayPlayer.length, ...filterArrayPlayer)
+	arrayComp.splice(0, arrayComp.length, ...filterArrayComp)
+
+	renderTable(arrayPlayer, playerCardsArea)
+	renderTable(arrayComp, computerCardsArea)
+
+	isDraw = false
 	turnNumber = 0
 }
 
