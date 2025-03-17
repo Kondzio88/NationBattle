@@ -44,6 +44,8 @@ let computerChoice = ''
 
 // Global Varriables for battlefield
 
+let battleContainer = null
+
 let currentPlayerUnit = null
 let currentCompUnit = null
 
@@ -228,7 +230,7 @@ const startBattle = (playerUnit, compUnit) => {
 	currentPlayerUnit = playerUnit
 	currentCompUnit = compUnit
 
-	const battleContainer = document.querySelector('.battle-container')
+	battleContainer = document.querySelector('.battle-container')
 	const battlePlayerCard = document.querySelector('.player-side')
 	const battleComputerCard = document.querySelector('.computer-side')
 
@@ -525,10 +527,8 @@ const turnComp = async () => {
 		setTimeout(() => {
 			if (turnNumber === 2 || currentPlayerUnit.hp <= 0 || currentCompUnit.hp <= 0) {
 				endTurn(playerArray, computerArray, currentPlayerUnit, currentCompUnit)
-				console.log('comp turn przed return');
+				battleContainer.style.display = 'none'
 				return
-				console.log('comp turn po return');
-				// trzeba battle display container dac na none i zbadac turn Number jakijest i czy sie resetuje
 			}
 			if (turnNumber < 2) {
 				isClicked = true
@@ -542,7 +542,6 @@ const turnComp = async () => {
 // End Turn Function
 
 const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
-	console.log('end turn w end turn')
 
 	let playerIndex = arrayPlayer.findIndex(x => x.name === currentPlayer.name)
 	let compIndex = arrayComp.findIndex(x => x.name === currentComp.name)
