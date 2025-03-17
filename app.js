@@ -45,6 +45,8 @@ let computerChoice = ''
 // Global Varriables for battlefield
 
 let battleContainer = null
+let centerSideImg = null
+let centerSideTitle = null
 
 let currentPlayerUnit = null
 let currentCompUnit = null
@@ -224,6 +226,26 @@ function getRandomCompUnit(computerArray) {
 	return compUnit
 }
 
+// Draw random map function
+
+const drawMap = (arr , imgEl ,title) => {
+	let randomNmbr = Math.floor(Math.random() * 4)
+	console.log(randomNmbr);
+	let imgSrc = arr[randomNmbr]
+	imgEl.src = imgSrc
+	if(randomNmbr === 0){
+		title.innerHTML = 'China'
+	}
+	if(randomNmbr === 1){
+		title.innerHTML = 'Russia'
+	}if(randomNmbr === 2){
+		title.innerHTML = 'USA'
+	}if(randomNmbr === 3){
+		title.innerHTML = 'Israel'
+	}
+}
+
+
 // Start battle  ,render battle field function
 
 const startBattle = (playerUnit, compUnit) => {
@@ -233,6 +255,7 @@ const startBattle = (playerUnit, compUnit) => {
 	battleContainer = document.querySelector('.battle-container')
 	const battlePlayerCard = document.querySelector('.player-side')
 	const battleComputerCard = document.querySelector('.computer-side')
+	centerSideImg = document.querySelector('.center-side img')
 
 	battlePlayerCard.innerHTML = ''
 	battleComputerCard.innerHTML = ''
@@ -470,12 +493,17 @@ const abbilites = (unit, divPower) => {
 const drawAndStartMove = () => {
 	isDraw = true
 
+	centerSideImg = document.querySelector('.center-side img')
+	centerSideTitle = document.querySelector('.center-side h1')
+
 	const drawInfoDiv = document.querySelector('.draw-info')
 	const drawTextresult = document.querySelector('.draw-text-result')
 	const drawTextResultWhoStart = document.querySelector('.draw-text-result-who-starts')
-
+	
 	drawTextResultWhoStart.innerHTML = ''
 	drawInfoDiv.style.display = 'flex'
+	
+	drawMap(randomMaps,centerSideImg,centerSideTitle)
 
 	let firtsMove = Math.floor(Math.random() * 2)
 

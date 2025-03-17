@@ -245,3 +245,7 @@ const akula = new Units(
 )
 
 china.push(type99, mi24, zhonguo, akula)
+
+// Map to random Map function
+
+const randomMaps = ['images/chinaMap.png','images/russiaMap.png','images/usaMap.png','images/israelMap.png']
