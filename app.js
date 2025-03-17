@@ -362,6 +362,9 @@ const startBattle = (playerUnit, compUnit) => {
 					textAfterBattle = 3
 				}
 			}
+			else{
+				return
+			}
 
 			await displayBattleResult(currentPlayerUnit, currentCompUnit)
 
@@ -580,23 +583,30 @@ const displayBattleResult = async (attacker, deffender) => {
 	textAttack.innerHTML = ''
 	deffenderUnitName.innerHTML = ''
 	textDeffense.innerHTML = ''
+	textDeffense.style.color = ''
+	textAttack.style.color = ''
 
 	attackerUnitName.innerHTML = `${attacker.name}`
 	if (textAfterBattle == 1) {
 		textAttack.innerHTML = `Zaatakowala z sila ${attacker.att}`
+		textAttack.style.color = 'red'
 		deffenderUnitName.innerHTML = `${deffender.name}`
 		textDeffense.innerHTML = `zostalo ${deffender.def} obrony`
+		textDeffense.style.color = 'green'
 		if (deffender.hp < 100) {
 			deffenderUnitName.innerHTML = `${deffender.name}`
 			deffenderUnitName.innerHTML = `${deffender.name} `
 			textDeffense.innerHTML = `zostalo 0 oborny <br> zostalo ${deffender.hp} zycia`
+			textDeffense.style.color = 'red'
 		}
 	}
 	if (textAfterBattle == 2) {
 		textAttack.innerHTML = `Uzyl Umiejetnosci ${attacker.info}`
+		textAttack.style.color = 'blue'
 	}
 	if (textAfterBattle == 3) {
 		textAttack.innerHTML = `Broni sie oborna ${attacker.def}`
+		textAttack.style.color = 'green'
 	}
 
 	await new Promise(res => setTimeout(res, 1000))

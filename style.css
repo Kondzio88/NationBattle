@@ -169,8 +169,22 @@ body {
 	border: 1px solid var(--black-color);
 	border-radius: 2rem;
 	padding: 1rem;
-	background: url(images/moro.jpg);
+	background-color: black;
+	background-image: url(images/worldMap.png);
+	background-repeat: no-repeat;
+	background-size: 200%;
+	background-position: left;
+	animation: bg-move 20s linear infinite alternate;
 	overflow: hidden;
+}
+
+@keyframes bg-move {
+	0%{
+		background-position: left;
+	}
+	100%{
+		background-position: right;
+	}
 }
 
 .title {
@@ -226,32 +240,6 @@ body {
 	font-size: 4rem;
 	color: #fff;
 	text-shadow: 1px 1px var(--black-color);
-}
-
-.box .nation .life {
-	position: relative;
-	width: 100%;
-	height: 3rem;
-	border-radius: 1rem;
-	background-color: #b8b5b5;
-	margin: 0 auto;
-	border-radius: 1rem;
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
-}
-
-.box .nation .life .progress {
-	width: 50%;
-	height: 100%;
-	background-color: green;
-	border-radius: 1rem;
-}
-
-.box .nation .life .progress-text {
-	position: absolute;
-	top: 3px;
-	left: 30%;
-	font-size: 2rem;
-	font-weight: bold;
 }
 
 /* Cards Style  */
@@ -520,6 +508,8 @@ body {
 .battle-result .unit-text{
 	font-size: 3rem;
 	text-align: center;
+	text-shadow: 1px 1px 1px white;
+
 }
 
 .battle-result .btn-ok {
