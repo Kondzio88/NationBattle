@@ -226,25 +226,26 @@ function getRandomCompUnit(computerArray) {
 	return compUnit
 }
 
-// Draw random map function
+// Draw random image function
 
-const drawMap = (arr , imgEl ,title) => {
+const drawImage = (arr, imgEl, title) => {
 	let randomNmbr = Math.floor(Math.random() * 4)
-	console.log(randomNmbr);
+	console.log(randomNmbr)
 	let imgSrc = arr[randomNmbr]
 	imgEl.src = imgSrc
-	if(randomNmbr === 0){
+	if (randomNmbr === 0) {
 		title.innerHTML = 'China'
 	}
-	if(randomNmbr === 1){
+	if (randomNmbr === 1) {
 		title.innerHTML = 'Russia'
-	}if(randomNmbr === 2){
+	}
+	if (randomNmbr === 2) {
 		title.innerHTML = 'USA'
-	}if(randomNmbr === 3){
+	}
+	if (randomNmbr === 3) {
 		title.innerHTML = 'Israel'
 	}
 }
-
 
 // Start battle  ,render battle field function
 
@@ -384,8 +385,7 @@ const startBattle = (playerUnit, compUnit) => {
 				} else if (button.classList.contains('defense-btn')) {
 					textAfterBattle = 3
 				}
-			}
-			else{
+			} else {
 				return
 			}
 
@@ -499,11 +499,11 @@ const drawAndStartMove = () => {
 	const drawInfoDiv = document.querySelector('.draw-info')
 	const drawTextresult = document.querySelector('.draw-text-result')
 	const drawTextResultWhoStart = document.querySelector('.draw-text-result-who-starts')
-	
+
 	drawTextResultWhoStart.innerHTML = ''
 	drawInfoDiv.style.display = 'flex'
-	
-	drawMap(randomMaps,centerSideImg,centerSideTitle)
+
+	drawImage(randomMaps, centerSideImg, centerSideTitle)
 
 	let firtsMove = Math.floor(Math.random() * 2)
 
@@ -573,7 +573,6 @@ const turnComp = async () => {
 // End Turn Function
 
 const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
-
 	let playerIndex = arrayPlayer.findIndex(x => x.name === currentPlayer.name)
 	let compIndex = arrayComp.findIndex(x => x.name === currentComp.name)
 

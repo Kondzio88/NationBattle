@@ -570,7 +570,8 @@ body {
 .battle-container .card-battle h3 {
 	font-size: 2.5rem;
 	font-weight: bold;
-	text-shadow: 1px 1px 1px white;
+	color:white;
+	text-shadow: 2px 1px 1px black;
 	padding: 0.5rem;
 	border-radius: 5px;
 	backdrop-filter: blur(5px);
@@ -585,7 +586,8 @@ body {
 	font-size: 2rem;
 	font-style: italic;
 	font-weight: bold;
-	text-shadow: 1px 1px 1px white;
+	color:white;
+	text-shadow: 2px 1px 1px black;
 	padding: 0.5rem;
 	border-radius: 5px;
 	backdrop-filter: blur(5px);
@@ -651,15 +653,19 @@ body {
 
 .battle-container .card-battle .info .att p {
 	font-size: 3rem;
+	color:red;
+	text-shadow: 1px 1px 1px white;
 }
 
 .battle-container .card-battle .info .def i {
 	font-size: 4rem;
-	color: blue;
+	color: green;
 }
 
 .battle-container .card-battle .info .def p {
 	font-size: 3rem;
+	color:green;
+	text-shadow: 1px 1px 1px white;
 }
 
 /*   Central side styles     */
