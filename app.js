@@ -230,7 +230,6 @@ function getRandomCompUnit(computerArray) {
 
 const drawImage = (arr, imgEl, title) => {
 	let randomNmbr = Math.floor(Math.random() * 4)
-	console.log(randomNmbr)
 	let imgSrc = arr[randomNmbr]
 	imgEl.src = imgSrc
 	if (randomNmbr === 0) {
@@ -511,9 +510,11 @@ const drawAndStartMove = () => {
 		if (firtsMove === playerFirst) {
 			drawTextresult.innerHTML = 'Ture rozpoczyna'
 			drawTextResultWhoStart.innerHTML = 'Player'
+			drawTextResultWhoStart.style.color = 'blue'
 		} else {
 			drawTextresult.innerHTML = 'Ture rozpoczyna'
 			drawTextResultWhoStart.innerHTML = 'Komputer'
+			drawTextResultWhoStart.style.color = 'red'
 		}
 		setTimeout(() => {
 			if (firtsMove === playerFirst) {

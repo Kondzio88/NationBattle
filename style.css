@@ -432,9 +432,13 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 70%;
-	height: 70%;
-	background-image: url(images/steelImg.png);
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	background-image: url(images/worldMap.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
 	box-shadow: 5px 5px 5px 2px black;
 	display: flex;
 	flex-direction: column;
@@ -450,7 +454,8 @@ body {
 .draw-info h1 {
 	padding-top: 2rem;
 	font-size: 6rem;
-	text-shadow: 2px 2px 1px white;
+	color:white;
+	text-shadow: 2px 2px 1px rgb(130, 130, 238);
 }
 
 .draw-info .text {
@@ -462,16 +467,19 @@ body {
 	margin-top: 2rem;
 }
 
+.draw-info .draw-text-result {
+	font-size: 4rem;
+	color:white;
+	text-shadow: 2px 2px 1px rgb(130, 130, 238);
+}
+
 .draw-info .draw-text-result-who-starts {
 	font-size: 5rem;
 	font-weight: bold;
-	text-shadow: 2px 2px 1px white;
+	color:white;
+	text-shadow: 2px 2px 1px rgb(130, 130, 238);
 }
 
-.draw-info .draw-text-result {
-	font-size: 4rem;
-	text-shadow: 2px 2px 1px white;
-}
 
 .draw-info .coin {
 	width: 40%;
@@ -501,23 +509,26 @@ body {
 }
 
 .battle-result .unit-name {
-	font-size: 4rem;
+	font-size: 5.5rem;
 	font-weight: bold;
-	text-shadow: 2px 2px 1px white;
+	color:white;
+	text-shadow: 2px 2px 1px rgb(130, 130, 238);
 }
 
 .battle-result .unit-text{
-	font-size: 3rem;
+	font-size: 4rem;
 	text-align: center;
 	text-shadow: 1px 1px 1px white;
-
+	font-weight: bold;
 }
 
 .battle-result .btn-ok {
 	width: 20rem;
 	height: 10rem;
 	background-color: black;
-	color: red;
+	box-shadow: 5px 5px 10px rgb(130, 130, 238);
+	color: white;
+	text-shadow: 2px 2px 1px rgb(130, 130, 238);
 	cursor: pointer;
 	font-size: 5rem;
 	margin-top:10rem;
@@ -824,7 +835,7 @@ body {
 
 	/* Draw info div */
 	.draw-info {
-		height: 50%;
+		height: 100%;
 	}
 	.draw-info .draw-text-result {
 		font-size: 3rem;
