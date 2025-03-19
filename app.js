@@ -40,8 +40,9 @@ let selectedCompUnit = ''
 
 let playerArray = ''
 let computerArray = ''
-let computerChoice = ''
 
+let computerChoice = ''
+let nationId = ''
 // Global Varriables for battlefield
 
 let battleContainer = null
@@ -78,7 +79,7 @@ let isDraw = false
 // Chose country by player and rander start Table
 
 const choseCountry = nation => {
-	let nationId = nation.querySelector('img').alt
+	nationId = nation.querySelector('img').alt
 	playerCardsArea = document.querySelector('.player-cards')
 	renderStartTable(nationId, playerCardsArea)
 	startGameContainer.style.display = 'none'
@@ -590,11 +591,21 @@ const endTurn = (arrayPlayer, arrayComp, currentPlayer, currentComp) => {
 	arrayPlayer.splice(0, arrayPlayer.length, ...filterArrayPlayer)
 	arrayComp.splice(0, arrayComp.length, ...filterArrayComp)
 
-	renderTable(arrayPlayer, playerCardsArea)
-	renderTable(arrayComp, computerCardsArea)
+	console.log('player', arrayPlayer.length)
+	console.log('comp', arrayComp.length)
 
-	isDraw = false
-	turnNumber = 0
+	if(arrayPlayer.length === 0 || arrayComp.length === 0){
+		endGame()
+		return
+	}
+	else{
+		renderTable(arrayPlayer, playerCardsArea)
+		renderTable(arrayComp, computerCardsArea)
+	
+		isDraw = false
+		turnNumber = 0
+	}
+
 }
 
 // Display After Battle functions
@@ -647,4 +658,29 @@ const displayBattleResult = async (attacker, deffender) => {
 
 	textAfterBattle = 0
 	battleResultDiv.style.display = 'none'
+}
+
+// End game function
+
+const endGame = () => {
+	const endDiv = document.querySelector('.end-game')
+	const nationtext = document.querySelector('.end-game .nation')
+	const btn = document.querySelector('.end-game .btn')
+
+	console.log(endDiv);
+	endDiv.style.display = 'flex'
+	console.log('start endGame func')
+
+	if (playerArray.length === 0) {
+		nationtext.innerHTML = computerChoice
+		console.log('player length in edngame',playerArray);
+	}
+	if (computerArray.length === 0) {
+		nationtext.innerHTML = nationId
+		console.log('computer length in edngame',computerArray);
+	}
+
+	btn.addEventListener('click', () => {
+		location.reload()
+	})
 }
